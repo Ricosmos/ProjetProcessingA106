@@ -1,9 +1,11 @@
+final int MOVE_SPEED = 25;
+
 float angle = 0f;
 float s = 500 / 2.0;
 PShape salle, skybox;
 PShader colorShader;
 PImage negx, posx, negy, posy, negz, posz;
-PImage bottom;
+PImage bottom, missingTexture;
 
 PVector[] defaultColors = new PVector[] {
   new PVector(255, 255, 255),
@@ -23,8 +25,10 @@ PVector[] debugColors = new PVector[] {
   new PVector(255, 0, 255) // magenta
 };
 
+PImage[] missingTextures;
+
 // Distance de la camera au sujet.
-float rayon = 2000;
+float rayon = 200;
 
 // Angle de la camera avec le sujet sur le plan XZ.
 float theta = 0;
@@ -32,9 +36,10 @@ float phi = 10;
 
 // Position cartésienne de la camera
 // calculée à partir du rayon et de l'angle.
-float camX = 0;
-float camY = 0;
-float camZ = 0;
+float camX, camY, camZ = 0;
+
+boolean movingXPos, movingXNeg, movingYPos, movingYNeg, movingZPos, movingZNeg = false;
+float centerX, centerY, centerZ = 0;
 
 float vitesseX = 0;
 float vitesseY = 0;
@@ -57,11 +62,15 @@ void setup() {
   size(800, 800, P3D);
   noStroke();
   loadImages();
+  initTexturesArrays();
   colorShader = loadShader("Lambert1DiffuseFrag.glsl", "Lambert1DiffuseVert.glsl");
+  initShapes();
+}
+
+void initShapes() {
   skybox = createSkyBox();
   salle = createSalle();
-
-
+  debugShapeCam = createDebugShapeCam(50);
 }
 
 void loadImages() {
@@ -72,6 +81,18 @@ void loadImages() {
   negz = loadImage("asset/sky_04_cubemap_2k/nz.png");
   posz = loadImage("asset/sky_04_cubemap_2k/pz.png");
   bottom = loadImage("asset/bottom.jpg");
+  missingTexture = loadImage("asset/wall.jpg");
+}
+
+void initTexturesArrays() {
+  missingTextures = new PImage[] {
+    missingTexture,
+    missingTexture,
+    missingTexture,
+    missingTexture,
+    missingTexture,
+    missingTexture
+  };
 }
 
 void draw() {
@@ -82,15 +103,22 @@ void draw() {
   // shader(colorShader);
   // drawLight();
 
+  movePositionCamera();
   bougerCamera();
 
   camera(
     camX, camY, camZ,
-    0, 0, 0,
+    centerX, centerY, centerZ,
     0, 1, 0);
 
+  drawShape();
+}
+
+void drawShape() {
   shape(skybox);
   shape(salle);
+  translate(centerX, centerY, centerZ);
+  shape(debugShapeCam);
 }
 
 void drawLight() {
@@ -123,12 +151,35 @@ void bougerCamera() {
   theta += vitesseX / 10f;
   phi += vitesseY / 10f;
 
-  camX = rayon * cos(phi) * sin(theta);
-  camY = rayon * sin(phi);
-  camZ = rayon * cos(phi) * cos(theta);
+  // print("theta: " + theta + " phi: " + phi + "\n");
+
+  centerX = rayon * cos(phi) * sin(theta);
+  centerY = rayon * sin(phi);
+  centerZ = rayon * cos(phi) * cos(theta);
 
   vitesseX *= 0.9;
   vitesseY *= 0.9;
+}
+
+void movePositionCamera() {
+  camX += moveCam(movingXPos, true);
+  camX += moveCam(movingXNeg, false);
+  camY += moveCam(movingYPos, true);
+  camY += moveCam(movingYNeg, false);
+  camZ += moveCam(movingZPos, true);
+  camZ += moveCam(movingZNeg, false);
+}
+
+float moveCam(boolean isMoving, boolean positiveDirection) {
+  if (!isMoving) {
+    return 0;
+  }
+
+  if (positiveDirection) {
+    return MOVE_SPEED;
+  } else {
+    return -MOVE_SPEED;
+  }
 }
 
 void mouseWheel(MouseEvent event) {
@@ -140,4 +191,26 @@ void mouseWheel(MouseEvent event) {
 }
 
 void keyPressed() {
+  movingXPos = keyAction('z', movingXPos, true);
+  movingXNeg = keyAction('s', movingXNeg, true);
+  movingZPos = keyAction('q', movingZPos, true);
+  movingZNeg = keyAction('d', movingZNeg, true);
+  movingYPos = keyAction('a', movingYPos, true);
+  movingYNeg = keyAction('e', movingYNeg, true);
+}
+
+void keyReleased() {
+  movingXPos = keyAction('z', movingXPos, false);
+  movingXNeg = keyAction('s', movingXNeg, false);
+  movingZPos = keyAction('q', movingZPos, false);
+  movingZNeg = keyAction('d', movingZNeg, false);
+  movingYPos = keyAction('a', movingYPos, false);
+  movingYNeg = keyAction('e', movingYNeg, false);
+}
+
+boolean keyAction(char keyInput, boolean state, boolean value) {
+  if (key == keyInput || key == Character.toUpperCase(keyInput)) {
+    return value;
+  }
+  return state;
 }
