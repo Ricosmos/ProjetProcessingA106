@@ -1,9 +1,9 @@
 PShape createSalle() {
 	PImage[] textures = new PImage[] {
-		bottom,
-		bottom,
-		bottom,
-		bottom,
+		wall,
+		wall,
+		wall,
+		wall,
 		bottom,
 		bottom
 	};

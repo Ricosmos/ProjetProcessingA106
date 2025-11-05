@@ -5,7 +5,7 @@ float s = 500 / 2.0;
 PShape salle, skybox;
 PShader colorShader;
 PImage negx, posx, negy, posy, negz, posz;
-PImage bottom, missingTexture;
+PImage bottom, wall;
 
 PVector[] defaultColors = new PVector[] {
   new PVector(255, 255, 255),
@@ -68,6 +68,7 @@ void setup() {
 }
 
 void initShapes() {
+  textureWrap(REPEAT);
   skybox = createSkyBox();
   salle = createSalle();
   debugShapeCam = createDebugShapeCam(50);
@@ -81,17 +82,17 @@ void loadImages() {
   negz = loadImage("asset/sky_04_cubemap_2k/nz.png");
   posz = loadImage("asset/sky_04_cubemap_2k/pz.png");
   bottom = loadImage("asset/bottom.jpg");
-  missingTexture = loadImage("asset/wall.jpg");
+  wall = loadImage("asset/wall.jpg");
 }
 
 void initTexturesArrays() {
   missingTextures = new PImage[] {
-    missingTexture,
-    missingTexture,
-    missingTexture,
-    missingTexture,
-    missingTexture,
-    missingTexture
+    wall,
+    wall,
+    wall,
+    wall,
+    wall,
+    wall
   };
 }
 
