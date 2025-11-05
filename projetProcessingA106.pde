@@ -1,11 +1,21 @@
 float angle = 0f;
 float s = 500 / 2.0;
-PShape cube;
+PShape salle, skybox;
 PShader colorShader;
+PImage negx, posx, negy, posy, negz, posz;
 PImage bottom;
 
+PVector[] defaultColors = new PVector[] {
+  new PVector(255, 255, 255),
+  new PVector(255, 255, 255),
+  new PVector(255, 255, 255),
+  new PVector(255, 255, 255),
+  new PVector(255, 255, 255),
+  new PVector(255, 255, 255)
+};
+
 // Distance de la camera au sujet.
-float rayon = 800;
+float rayon = 2000;
 
 // Angle de la camera avec le sujet sur le plan XZ.
 float theta = 0;
@@ -39,10 +49,19 @@ void setup() {
   noStroke();
   loadImages();
   colorShader = loadShader("Lambert1DiffuseFrag.glsl", "Lambert1DiffuseVert.glsl");
-  cube = createSalle();
+  skybox = createSkyBox();
+  salle = createSalle();
+
+
 }
 
 void loadImages() {
+  negx = loadImage("asset/sky_04_cubemap_2k/nx.png");
+  posx = loadImage("asset/sky_04_cubemap_2k/px.png");
+  negy = loadImage("asset/sky_04_cubemap_2k/ny.png");
+  posy = loadImage("asset/sky_04_cubemap_2k/py.png");
+  negz = loadImage("asset/sky_04_cubemap_2k/nz.png");
+  posz = loadImage("asset/sky_04_cubemap_2k/pz.png");
   bottom = loadImage("asset/bottom.jpg");
 }
 
@@ -61,7 +80,8 @@ void draw() {
     0, 0, 0,
     0, 1, 0);
 
-  shape(cube);
+  shape(skybox);
+  shape(salle);
 }
 
 void drawLight() {
@@ -113,8 +133,4 @@ void mouseWheel(MouseEvent event) {
 // boolean isStrokeEnabled = true;
 
 void keyPressed() {
-  // reload cube
-  if (key == 'r' || key == 'R') {
-    cube = createCube();
-  }
 }

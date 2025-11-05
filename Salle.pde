@@ -1,5 +1,14 @@
 PShape createSalle() {
-	PShape salle = createCube();
+	PImage[] textures = new PImage[] {
+		bottom,
+		bottom,
+		bottom,
+		bottom,
+		bottom,
+		bottom
+	};
+
+	PShape salle = createCube(textures, defaultColors);
 
 	salle.scale(600, 280, 980);
 
