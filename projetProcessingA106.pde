@@ -14,6 +14,15 @@ PVector[] defaultColors = new PVector[] {
   new PVector(255, 255, 255)
 };
 
+PVector[] debugColors = new PVector[] {
+  new PVector(255, 0, 0), // red
+  new PVector(0, 255, 0), // green
+  new PVector(0, 0, 255), // blue
+  new PVector(255, 255, 0), // yellow
+  new PVector(0, 255, 255), // cyan
+  new PVector(255, 0, 255) // magenta
+};
+
 // Distance de la camera au sujet.
 float rayon = 2000;
 
@@ -129,8 +138,6 @@ void mouseWheel(MouseEvent event) {
     rayon -= 20;
   }
 }
-
-// boolean isStrokeEnabled = true;
 
 void keyPressed() {
 }

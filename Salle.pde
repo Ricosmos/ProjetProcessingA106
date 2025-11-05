@@ -8,7 +8,7 @@ PShape createSalle() {
 		bottom
 	};
 
-	PShape salle = createCube(textures, defaultColors);
+	PShape salle = createCube(textures, defaultColors, true);
 
 	salle.scale(600, 280, 980);
 
