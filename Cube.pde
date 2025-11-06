@@ -75,20 +75,12 @@ PShape createCube(PImage[] textures, PVector[] colors) {
   return createCube(textures, colors, false);
 }
 
-PShape createCubeInitFace() {
+PShape createCubeFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, PVector[] uvs) {
   PShape face = createShape();
   face.beginShape(QUAD);
   face.textureMode(NORMAL);
   face.shininess(200.0);
   face.emissive(0, 0, 0);
-  face.endShape();
-
-  return face;
-}
-
-PShape createCubeFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, PVector[] uvs) {
-  PShape face = createCubeInitFace();
-  face.beginShape(QUAD);
   face.texture(tex);
   face.tint(colors.x, colors.y, colors.z);
   face.vertex(v0.x, v0.y, v0.z, uvs[0].x, uvs[0].y);
@@ -99,4 +91,3 @@ PShape createCubeFace(PImage tex, PVector colors, PVector v0, PVector v1, PVecto
 
   return face;
 }
-

@@ -68,7 +68,7 @@ void setup() {
 }
 
 void initShapes() {
-  textureWrap(REPEAT);
+  //textureWrap(REPEAT);
   skybox = createSkyBox();
   salle = createSalle();
   debugShapeCam = createDebugShapeCam(50);
@@ -98,8 +98,6 @@ void initTexturesArrays() {
 
 void draw() {
   background(0, 0, 150);
-
-  frameRate(1000);
 
   // shader(colorShader);
   // drawLight();
