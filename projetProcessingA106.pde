@@ -1,5 +1,3 @@
-final int MOVE_SPEED = 25;
-
 float angle = 0f;
 float s = 500 / 2.0;
 PShape salle, skybox;
@@ -41,6 +39,7 @@ void initShapes() {
   skybox = createSkyBox();
   salle = createSalle();
   debugShapeCam = createDebugShapeCam(50);
+  debugZeroZero = createZeroZero(20);
 }
 
 void loadImages() {
@@ -84,9 +83,12 @@ void draw() {
 
 void drawShape() {
   shape(skybox);
-  shape(salle);
+//   shape(salle);
+  shape(debugZeroZero);
+  pushMatrix();
   translate(centerX, centerY, centerZ);
   shape(debugShapeCam);
+  popMatrix();
 }
 
 boolean keyAction(char keyInput, boolean state, boolean value) {
