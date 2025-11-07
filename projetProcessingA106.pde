@@ -70,7 +70,6 @@ void draw() {
   // shader(colorShader);
   // drawLight();
 
-  velocityInformation();
   movePositionCamera();
   moveCenterCamera();
 
@@ -80,16 +79,20 @@ void draw() {
     0, 1, 0);
 
   drawShape();
+  velocityInformation();
 }
 
 void drawShape() {
-  shape(skybox);
-  shape(salle);
-  shape(debugZeroZero);
+  
   pushMatrix();
   translate(centerX, centerY, centerZ);
   shape(debugShapeCam);
   popMatrix();
+
+  shape(skybox);
+  translate(-SALLE_W / 2.0, -SALLE_H / 2.0, -SALLE_D / 2.0);
+  shape(salle);
+  shape(debugZeroZero);
 }
 
 boolean keyAction(char keyInput, boolean state, boolean value) {

@@ -26,7 +26,7 @@ PShape createZeroZero(float size) {
 }
 
 void velocityInformation() {
-  pushMatrix();
+  hint(DISABLE_DEPTH_TEST);
 
 	camera();
 
@@ -43,5 +43,5 @@ void velocityInformation() {
   // text("movingYPos: " + movingYPos + " movingYNeg: " + movingYNeg, 10, 160);
   // text("movingZPos: " + movingZPos + " movingZNeg: " + movingZNeg, 10, 180);
 
-  popMatrix();
+  hint(ENABLE_DEPTH_TEST);
 }
