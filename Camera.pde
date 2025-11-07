@@ -1,6 +1,6 @@
 import java.util.function.Function;
 
-final float MOVE_SPEED = 10.0;
+float MOVE_SPEED = 25.0;
 
 // Distance de la camera au sujet.
 float rayon = 300;
@@ -30,23 +30,22 @@ void moveCenterCamera() {
 }
 
 void movePositionCamera() {
-  float moveX = moveCam(movingXPos, true);
-  moveX += moveCam(movingXNeg, false);
-  float moveY = moveCam(movingYPos, true);
-  moveY += moveCam(movingYNeg, false);
-  float moveZ = moveCam(movingZPos, true);
-  moveZ += moveCam(movingZNeg, false);
+  float inputX = moveCam(movingXPos, true) + moveCam(movingXNeg, false);
+  float moveY = moveCam(movingYPos, true) + moveCam(movingYNeg, false);
+  float inputZ = moveCam(movingZPos, true) + moveCam(movingZNeg, false);
 
-  text("moveX + moveZ: " + (moveX + moveZ) + "\n", mouseX, mouseY - 600);
+  float forwardX = MOVE_X_CAM.apply(1.0);
+  float forwardZ = MOVE_Z_CAM.apply(1.0);
 
-  moveX = (moveX + moveZ) * MOVE_X_CAM.apply(1.0) ;
-  moveZ = (moveZ + moveX) * MOVE_Z_CAM.apply(1.0) ;
+  float rightX = cos(theta);
+  float rightZ = -sin(theta);
 
-	text("moveX: " + moveX + " moveY: " + moveY + " moveZ: " + moveZ + "\n", mouseX, mouseY - 150);
+  float dx = inputX * rightX + inputZ * forwardX;
+  float dz = inputX * rightZ + inputZ * forwardZ;
 
-  camX += moveX;
+  camX += dx;
   camY += moveY;
-  camZ += moveZ;
+  camZ += dz;
 }
 
 float moveCam(boolean isMoving, boolean positiveDirection) {
@@ -63,18 +62,18 @@ float moveCam(boolean isMoving, boolean positiveDirection) {
 
 void cameraKeyReleased() {
   movingZPos = keyAction('z', movingZPos, false);
-  movingXNeg = keyAction('q', movingXNeg, false);
+  movingXPos = keyAction('q', movingXPos, false);
   movingZNeg = keyAction('s', movingZNeg, false);
-  movingXPos = keyAction('d', movingXPos, false);
+  movingXNeg = keyAction('d', movingXNeg, false);
   movingYPos = keyAction('a', movingYPos, false);
   movingYNeg = keyAction('e', movingYNeg, false);
 }
 
 void cameraKeyPressed() {
   movingZPos = keyAction('z', movingZPos, true);
-  movingXNeg = keyAction('q', movingXNeg, true);
+  movingXPos = keyAction('q', movingXPos, true);
   movingZNeg = keyAction('s', movingZNeg, true);
-  movingXPos = keyAction('d', movingXPos, true);
+  movingXNeg = keyAction('d', movingXNeg, true);
   movingYPos = keyAction('a', movingYPos, true);
   movingYNeg = keyAction('e', movingYNeg, true);
 }

@@ -84,7 +84,7 @@ void draw() {
 
 void drawShape() {
   shape(skybox);
-  //   shape(salle);
+  shape(salle);
   shape(debugZeroZero);
   pushMatrix();
   translate(centerX, centerY, centerZ);
