@@ -70,8 +70,9 @@ void draw() {
   // shader(colorShader);
   // drawLight();
 
+  velocityInformation();
   movePositionCamera();
-  bougerCamera();
+  moveCenterCamera();
 
   camera(
     camX, camY, camZ,
@@ -83,7 +84,7 @@ void draw() {
 
 void drawShape() {
   shape(skybox);
-//   shape(salle);
+  //   shape(salle);
   shape(debugZeroZero);
   pushMatrix();
   translate(centerX, centerY, centerZ);
@@ -112,5 +113,5 @@ void keyPressed() {
 }
 
 void keyReleased() {
-    cameraKeyReleased();
+  cameraKeyReleased();
 }

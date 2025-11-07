@@ -1,6 +1,6 @@
 import java.util.function.Function;
 
-final float MOVE_SPEED = 50.0;
+final float MOVE_SPEED = 10.0;
 
 // Distance de la camera au sujet.
 float rayon = 300;
@@ -20,9 +20,7 @@ Function<Float, Float> MOVE_X_CAM = (Float a) -> a * cos(phi) * sin(theta);
 Function<Float, Float> MOVE_Y_CAM = (Float a) -> a * sin(phi);
 Function<Float, Float> MOVE_Z_CAM = (Float a) -> a * cos(phi) * cos(theta);
 
-void bougerCamera() {
-  // Calcul de la position cartésienne sur le
-  // plan XZ :
+void moveCenterCamera() {
   theta += (pmouseX - mouseX) / 100f % TWO_PI;
   phi += (mouseY - pmouseY) / 100f % TWO_PI;
 
@@ -32,49 +30,51 @@ void bougerCamera() {
 }
 
 void movePositionCamera() {
-  float moveX = moveCam(movingXPos, true, MOVE_X_CAM);
-  moveX += moveCam(movingXNeg, false, MOVE_X_CAM);
-  float moveY = moveCam(movingYPos, true, MOVE_Y_CAM);
-  moveY += moveCam(movingYNeg, false, MOVE_Y_CAM);
-  float moveZ = moveCam(movingZPos, true, MOVE_Z_CAM);
-  moveZ += moveCam(movingZNeg, false, MOVE_Z_CAM);
+  float moveX = moveCam(movingXPos, true);
+  moveX += moveCam(movingXNeg, false);
+  float moveY = moveCam(movingYPos, true);
+  moveY += moveCam(movingYNeg, false);
+  float moveZ = moveCam(movingZPos, true);
+  moveZ += moveCam(movingZNeg, false);
 
-  //   centerX = moveX;
-  //   centerY = moveY;
-  //   centerZ = moveZ;
-	print("moveX: " + moveX + " moveY: " + moveY + " moveZ: " + moveZ + "\n");
+  text("moveX + moveZ: " + (moveX + moveZ) + "\n", mouseX, mouseY - 600);
+
+  moveX = (moveX + moveZ) * MOVE_X_CAM.apply(1.0) ;
+  moveZ = (moveZ + moveX) * MOVE_Z_CAM.apply(1.0) ;
+
+	text("moveX: " + moveX + " moveY: " + moveY + " moveZ: " + moveZ + "\n", mouseX, mouseY - 150);
 
   camX += moveX;
   camY += moveY;
   camZ += moveZ;
 }
 
-float moveCam(boolean isMoving, boolean positiveDirection, Function<Float, Float> moveFunction) {
+float moveCam(boolean isMoving, boolean positiveDirection) {
   if (!isMoving) {
     return 0;
   }
 
   if (positiveDirection) {
-    return moveFunction.apply(MOVE_SPEED);
+    return MOVE_SPEED;
   } else {
-    return -moveFunction.apply(MOVE_SPEED);
+    return -MOVE_SPEED;
   }
 }
 
 void cameraKeyReleased() {
-  movingXPos = keyAction('z', movingXPos, false);
-  movingXNeg = keyAction('s', movingXNeg, false);
-  movingZPos = keyAction('q', movingZPos, false);
-  movingZNeg = keyAction('d', movingZNeg, false);
+  movingZPos = keyAction('z', movingZPos, false);
+  movingXNeg = keyAction('q', movingXNeg, false);
+  movingZNeg = keyAction('s', movingZNeg, false);
+  movingXPos = keyAction('d', movingXPos, false);
   movingYPos = keyAction('a', movingYPos, false);
   movingYNeg = keyAction('e', movingYNeg, false);
 }
 
 void cameraKeyPressed() {
-  movingXPos = keyAction('z', movingXPos, true);
-  movingXNeg = keyAction('s', movingXNeg, true);
-  movingZPos = keyAction('q', movingZPos, true);
-  movingZNeg = keyAction('d', movingZNeg, true);
+  movingZPos = keyAction('z', movingZPos, true);
+  movingXNeg = keyAction('q', movingXNeg, true);
+  movingZNeg = keyAction('s', movingZNeg, true);
+  movingXPos = keyAction('d', movingXPos, true);
   movingYPos = keyAction('a', movingYPos, true);
   movingYNeg = keyAction('e', movingYNeg, true);
 }
