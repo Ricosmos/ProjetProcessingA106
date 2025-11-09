@@ -1,7 +1,9 @@
 PShape debugShapeCam, debugZeroZero;
 
+boolean debugMode = false;
+
 PShape createDebugShapeCam(float size) {
-  PShape debugShape = createCube(missingTextures, debugColors, false);
+  PShape debugShape = createCubeMagique(missingTextures, debugColors, false);
 
   debugShape.scale(size, size, size);
 
@@ -18,7 +20,7 @@ PShape createZeroZero(float size) {
     new PVector(255, 255, 255)  // white
   };
 
-  PShape debugShape = createCube(missingTextures, originColors, false);
+  PShape debugShape = createCubeMagique(missingTextures, originColors, false);
 
   debugShape.scale(size, size, size);
 
@@ -44,4 +46,26 @@ void velocityInformation() {
   // text("movingZPos: " + movingZPos + " movingZNeg: " + movingZNeg, 10, 180);
 
   hint(ENABLE_DEPTH_TEST);
+}
+
+void drawDebug() {
+  if (debugMode) {
+    shape(debugZeroZero);
+    pushMatrix();
+    translate(centerX, centerY, centerZ);
+    shape(debugShapeCam);
+    popMatrix();
+    velocityInformation();
+  }
+}
+
+void keyDebugMode() {
+  debugMode = !debugMode;
+}
+
+void keyPressedDebug() {
+  if (key == 'i' || key == 'I') {
+  	keyDebugMode();
+    print("Debug mode: " + debugMode);
+  }
 }

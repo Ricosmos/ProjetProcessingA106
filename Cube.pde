@@ -12,7 +12,7 @@ float c = 1; // 1 cm
 2--------3
 */
 
-// Cube vertex indices
+// CubeMagique vertex indices
 final int FRONT_TL = 0;
 final int FRONT_TR = 1;
 final int FRONT_BL = 2;
@@ -22,7 +22,7 @@ final int BACK_TR = 5;
 final int BACK_BL = 6;
 final int BACK_BR = 7;
 
-// Cube face indices
+// CubeMagique face indices
 final int FRONT = 0;
 final int BACK = 1;
 final int RIGHT = 2;
@@ -56,26 +56,44 @@ PVector[] cubeVertices = {
   new PVector( c,  c, -c)  // 7
 };
 
-PShape createCube(PImage[] textures, PVector[] colors, boolean invertUVs) {
+PShape createCubeMagique(PImage[] textures, PVector[] colors, boolean invertUVs, int uvMultiplier) {
+  /*
+  Bien meilleur que le cube magique de Mathéo en 2023 et de Dorian en 2024 !
+  */
   PVector[] uvs = invertUVs ? cubeUVsInverted : cubeUVs;
 
+  uvs = new PVector[] {
+    new PVector(uvs[0].x * uvMultiplier, uvs[0].y * uvMultiplier),
+    new PVector(uvs[1].x * uvMultiplier, uvs[1].y * uvMultiplier),
+    new PVector(uvs[2].x * uvMultiplier, uvs[2].y * uvMultiplier),
+    new PVector(uvs[3].x * uvMultiplier, uvs[3].y * uvMultiplier)
+  };
+
   PShape cube = createShape(GROUP);
-  cube.addChild( createCubeFace(textures[FRONT], colors[FRONT], cubeVertices[FRONT_TL], cubeVertices[FRONT_TR], cubeVertices[FRONT_BR], cubeVertices[FRONT_BL], uvs) );
-  cube.addChild( createCubeFace(textures[BACK], colors[BACK], cubeVertices[BACK_TR], cubeVertices[BACK_TL], cubeVertices[BACK_BL], cubeVertices[BACK_BR], uvs) );
-  cube.addChild( createCubeFace(textures[RIGHT], colors[RIGHT], cubeVertices[FRONT_TR], cubeVertices[BACK_TR], cubeVertices[BACK_BR], cubeVertices[FRONT_BR], uvs) );
-  cube.addChild( createCubeFace(textures[LEFT], colors[LEFT], cubeVertices[BACK_TL], cubeVertices[FRONT_TL], cubeVertices[FRONT_BL], cubeVertices[BACK_BL], uvs) );
-  cube.addChild( createCubeFace(textures[BOTTOM], colors[BOTTOM], cubeVertices[FRONT_BL], cubeVertices[FRONT_BR], cubeVertices[BACK_BR], cubeVertices[BACK_BL], uvs) );
-  cube.addChild( createCubeFace(textures[TOP], colors[TOP], cubeVertices[BACK_TL], cubeVertices[BACK_TR], cubeVertices[FRONT_TR], cubeVertices[FRONT_TL], uvs) );
+  cube.addChild( createCubeMagiqueFace(textures[FRONT], colors[FRONT], cubeVertices[FRONT_TL], cubeVertices[FRONT_TR], cubeVertices[FRONT_BR], cubeVertices[FRONT_BL], uvs) );
+  cube.addChild( createCubeMagiqueFace(textures[BACK], colors[BACK], cubeVertices[BACK_TR], cubeVertices[BACK_TL], cubeVertices[BACK_BL], cubeVertices[BACK_BR], uvs) );
+  cube.addChild( createCubeMagiqueFace(textures[RIGHT], colors[RIGHT], cubeVertices[FRONT_TR], cubeVertices[BACK_TR], cubeVertices[BACK_BR], cubeVertices[FRONT_BR], uvs) );
+  cube.addChild( createCubeMagiqueFace(textures[LEFT], colors[LEFT], cubeVertices[BACK_TL], cubeVertices[FRONT_TL], cubeVertices[FRONT_BL], cubeVertices[BACK_BL], uvs) );
+  cube.addChild( createCubeMagiqueFace(textures[BOTTOM], colors[BOTTOM], cubeVertices[FRONT_BL], cubeVertices[FRONT_BR], cubeVertices[BACK_BR], cubeVertices[BACK_BL], uvs) );
+  cube.addChild( createCubeMagiqueFace(textures[TOP], colors[TOP], cubeVertices[BACK_TL], cubeVertices[BACK_TR], cubeVertices[FRONT_TR], cubeVertices[FRONT_TL], uvs) );
 
   return cube;
 }
 
 
-PShape createCube(PImage[] textures, PVector[] colors) {
-  return createCube(textures, colors, false);
+PShape createCubeMagique(PImage[] textures, PVector[] colors) {
+  return createCubeMagique(textures, colors, false, 1);
 }
 
-PShape createCubeFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, PVector[] uvs) {
+PShape createCubeMagique(PImage[] textures, PVector[] colors, int uvMultiplier) {
+  return createCubeMagique(textures, colors, false, uvMultiplier);
+}
+
+PShape createCubeMagique(PImage[] textures, PVector[] colors, boolean invertUVs) {
+  return createCubeMagique(textures, colors, invertUVs, 1);
+}
+
+PShape createCubeMagiqueFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, PVector[] uvs) {
   PShape face = createShape();
   face.beginShape(QUAD);
   face.textureMode(NORMAL);

@@ -1,6 +1,6 @@
 import java.util.function.Function;
 
-float MOVE_SPEED = 25.0;
+float MOVE_SPEED = 10.0;
 
 // Distance de la camera au sujet.
 float rayon = 300;

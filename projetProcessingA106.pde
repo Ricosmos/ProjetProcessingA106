@@ -1,6 +1,5 @@
 float angle = 0f;
 float s = 500 / 2.0;
-PShape salle, skybox;
 PShader colorShader;
 PImage negx, posx, negy, posy, negz, posz;
 PImage bottom, wall;
@@ -49,7 +48,7 @@ void loadImages() {
   posy = loadImage("asset/sky_04_cubemap_2k/py.png");
   negz = loadImage("asset/sky_04_cubemap_2k/nz.png");
   posz = loadImage("asset/sky_04_cubemap_2k/pz.png");
-  bottom = loadImage("asset/bottom.jpg");
+  bottom = loadImage("asset/laminate_floor_02_diff_1k.jpg");
   wall = loadImage("asset/wall.jpg");
 }
 
@@ -79,20 +78,16 @@ void draw() {
     0, 1, 0);
 
   drawShape();
-  velocityInformation();
+  drawDebug();
 }
 
 void drawShape() {
-  
+  textureWrap(REPEAT);
   pushMatrix();
-  translate(centerX, centerY, centerZ);
-  shape(debugShapeCam);
-  popMatrix();
-
   shape(skybox);
   translate(-SALLE_W / 2.0, -SALLE_H / 2.0, -SALLE_D / 2.0);
   shape(salle);
-  shape(debugZeroZero);
+  popMatrix();
 }
 
 boolean keyAction(char keyInput, boolean state, boolean value) {
@@ -113,6 +108,7 @@ void mouseWheel(MouseEvent event) {
 
 void keyPressed() {
   cameraKeyPressed();
+  keyPressedDebug();
 }
 
 void keyReleased() {
