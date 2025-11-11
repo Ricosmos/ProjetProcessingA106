@@ -2,7 +2,7 @@ float angle = 0f;
 float s = 500 / 2.0;
 PShader colorShader;
 PImage negx, posx, negy, posy, negz, posz;
-PImage bottom, wall;
+PImage bottom, wall, noTexture;
 
 PVector[] defaultColors = new PVector[] {
   new PVector(255, 255, 255),
@@ -40,6 +40,7 @@ void initShapes() {
   //textureWrap(REPEAT);
   skybox = createSkyBox();
   salle = createSalle();
+  table = createTable();
   debugShapeCam = createDebugShapeCam(50);
   debugZeroZero = createZeroZero(20);
 }
@@ -53,6 +54,10 @@ void loadImages() {
   posz = loadImage("asset/sky_04_cubemap_2k/pz.png");
   bottom = loadImage("asset/laminate_floor_02_diff_1k.jpg");
   wall = loadImage("asset/wall.jpg");
+  wood = loadImage("asset/wood.jpg");
+  woodTop = loadImage("asset/woodTop.jpg");
+  bureau = loadImage("asset/bureau.jpg");
+  noTexture = loadImage("asset/default.jpg");
 }
 
 void initTexturesArrays() {
@@ -90,6 +95,7 @@ void drawShape() {
   shape(skybox);
   translate(SALLE_W, -SALLE_H, SALLE_D);
   shape(salle);
+  shape(table);
   popMatrix();
 }
 
