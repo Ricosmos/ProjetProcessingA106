@@ -11,7 +11,7 @@ float phi = 10;
 
 // Position cartésienne de la camera
 // calculée à partir du rayon et de l'angle.
-float camX, camY, camZ = 0;
+float camX, camY, camZ;
 
 boolean movingXPos, movingXNeg, movingYPos, movingYNeg, movingZPos, movingZNeg = false;
 float centerX, centerY, centerZ = 0;

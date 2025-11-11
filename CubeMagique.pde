@@ -80,7 +80,6 @@ PShape createCubeMagique(PImage[] textures, PVector[] colors, boolean invertUVs,
   return cube;
 }
 
-
 PShape createCubeMagique(PImage[] textures, PVector[] colors) {
   return createCubeMagique(textures, colors, false, 1);
 }

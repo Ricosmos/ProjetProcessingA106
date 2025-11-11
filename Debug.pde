@@ -29,9 +29,7 @@ PShape createZeroZero(float size) {
 
 void velocityInformation() {
   hint(DISABLE_DEPTH_TEST);
-
-	camera();
-
+  camera();
   textSize(16);
   fill(255);
   text("CamX: " + camX + " CamY: " + camY + " CamZ: " + camZ, 10, 20);

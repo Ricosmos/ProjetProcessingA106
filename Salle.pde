@@ -1,6 +1,6 @@
-final int SALLE_W = 600;
-final int SALLE_H = 280;
-final int SALLE_D = 980;
+final int SALLE_W = 600 / 2;
+final int SALLE_H = 280 / 2;
+final int SALLE_D = 980 / 2;
 
 PShape salle;
 PShape murAvant, murArriere, murGauche, murDroit, plafond, sol;

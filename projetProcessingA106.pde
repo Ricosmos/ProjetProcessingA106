@@ -26,6 +26,9 @@ PImage[] missingTextures;
 
 void setup() {
   size(800, 800, P3D);
+  camX = SALLE_W;
+  camY = -SALLE_H;
+  camZ = SALLE_D;
   noStroke();
   loadImages();
   initTexturesArrays();
@@ -85,7 +88,7 @@ void drawShape() {
   textureWrap(REPEAT);
   pushMatrix();
   shape(skybox);
-  translate(-SALLE_W / 2.0, -SALLE_H / 2.0, -SALLE_D / 2.0);
+  translate(SALLE_W, -SALLE_H, SALLE_D);
   shape(salle);
   popMatrix();
 }
