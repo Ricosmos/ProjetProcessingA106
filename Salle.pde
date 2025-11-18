@@ -4,6 +4,7 @@ final int SALLE_D = 980 / 2;
 
 PShape salle;
 PShape murAvant, murArriere, murGauche, murDroit, plafond, sol;
+PImage bottom, wall;
 
 PShape createSalle() {
 	PImage[] textures = new PImage[] {
@@ -20,4 +21,9 @@ PShape createSalle() {
 	salle.scale(SALLE_W, SALLE_H, SALLE_D);
 
 	return salle;
+}
+
+void loadSalleImages() {
+	bottom = loadImage("asset/salle/laminate_floor_02_diff_1k.jpg");
+	wall = loadImage("asset/salle/wall.jpg");
 }

@@ -1,8 +1,7 @@
 float angle = 0f;
 float s = 500 / 2.0;
 PShader colorShader;
-PImage negx, posx, negy, posy, negz, posz;
-PImage bottom, wall, noTexture;
+PImage noTexture;
 
 PVector[] defaultColors = new PVector[] {
   new PVector(255, 255, 255),
@@ -46,28 +45,20 @@ void initShapes() {
 }
 
 void loadImages() {
-  negx = loadImage("asset/sky_04_cubemap_2k/nx.png");
-  posx = loadImage("asset/sky_04_cubemap_2k/px.png");
-  negy = loadImage("asset/sky_04_cubemap_2k/ny.png");
-  posy = loadImage("asset/sky_04_cubemap_2k/py.png");
-  negz = loadImage("asset/sky_04_cubemap_2k/nz.png");
-  posz = loadImage("asset/sky_04_cubemap_2k/pz.png");
-  bottom = loadImage("asset/laminate_floor_02_diff_1k.jpg");
-  wall = loadImage("asset/wall.jpg");
-  wood = loadImage("asset/wood.jpg");
-  woodTop = loadImage("asset/woodTop.jpg");
-  bureau = loadImage("asset/bureau.jpg");
+  loadSkyboxImages();
+  loadTableImages();
+  loadSalleImages();
   noTexture = loadImage("asset/default.jpg");
 }
 
 void initTexturesArrays() {
   missingTextures = new PImage[] {
-    wall,
-    wall,
-    wall,
-    wall,
-    wall,
-    wall
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture
   };
 }
 

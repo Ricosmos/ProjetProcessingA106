@@ -57,3 +57,9 @@ PShape createSupportTable() {
 
   return supportTable;
 }
+
+void loadTableImages() {
+  bureau = loadImage("asset/table/bureau.jpg");
+  wood = loadImage("asset/table/wood.jpg");
+  woodTop = loadImage("asset/table/woodTop.jpg");
+}
