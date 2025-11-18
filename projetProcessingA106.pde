@@ -40,7 +40,7 @@ void initShapes() {
   skybox = createSkyBox();
   salle = createSalle();
   table = createTable();
-  debugShapeCam = createDebugShapeCam(50);
+  debugShapeCam = createDebugShapeCam(10);
   debugZeroZero = createZeroZero(20);
 }
 

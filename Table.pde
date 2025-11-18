@@ -1,10 +1,14 @@
 final int PLANCHE_W = 80 / 2;
 final int PLANCHE_H = 2 / 2;
-final int PLANCHE_D = 80 / 2;
+final int PLANCHE_D = PLANCHE_W;
 
 final int SUPPORT_W = 80 / 2;
 final int SUPPORT_H = 73 / 2;
 final int SUPPORT_D = 21 / 2;
+
+final int PIED_W = 10 / 2;
+final int PIED_H = 5 / 2;
+final int PIED_D = 70 / 2;
 
 PImage wood, woodTop, bureau;
 PShape table;
@@ -14,12 +18,18 @@ PShape createTable() {
 
   PShape planche = createPlancheTable();
   PShape support = createSupportTable();
+  PShape piedLeft = createPiedTable();
+  PShape piedRight = createPiedTable();
 
-  planche.translate(0, -SUPPORT_H * 2 + PLANCHE_H / 2, 0);
-//   support.translate(0, SUPPORT_H * 2, 0);
+  planche.translate(0, -PLANCHE_H, 0);
+  support.translate(0, SUPPORT_H, -PLANCHE_W / 2);
+  piedLeft.translate(-SUPPORT_W + PIED_W, SUPPORT_H * 2 + PIED_H, 0);
+  piedRight.translate(SUPPORT_W - PIED_W, SUPPORT_H * 2 + PIED_H, 0);
 
   table.addChild(planche);
   table.addChild(support);
+  table.addChild(piedLeft);
+  table.addChild(piedRight);
 
   return table;
 }
@@ -56,6 +66,33 @@ PShape createSupportTable() {
   supportTable.scale(SUPPORT_W, SUPPORT_H, SUPPORT_D);
 
   return supportTable;
+}
+
+PShape createPiedTable() {
+  PImage[] textures = new PImage[] {
+	noTexture,
+	noTexture,
+	noTexture,
+	noTexture,
+	noTexture,
+	noTexture
+  };
+
+  PVector grey = new PVector(150, 150, 150);
+  PVector[] piedColors = new PVector[] {
+    grey,
+    grey,
+    grey,
+    grey,
+    grey,
+    grey
+  };  
+
+  PShape piedTable = createCubeMagique(textures, piedColors);
+
+  piedTable.scale(PIED_W, PIED_H, PIED_D);
+
+  return piedTable;
 }
 
 void loadTableImages() {
