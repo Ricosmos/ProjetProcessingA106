@@ -6,9 +6,9 @@ final int SUPPORT_W = 80 / 2;
 final int SUPPORT_H = 73 / 2;
 final int SUPPORT_D = 21 / 2;
 
-final int PIED_W = 10 / 2;
-final int PIED_H = 5 / 2;
-final int PIED_D = 70 / 2;
+final int PIED_TABLE_W = 10 / 2;
+final int PIED_TABLE_H = 5 / 2;
+final int PIED_TABLE_D = 70 / 2;
 
 PImage wood, woodTop, bureau;
 PShape table;
@@ -23,13 +23,16 @@ PShape createTable() {
 
   planche.translate(0, -PLANCHE_H, 0);
   support.translate(0, SUPPORT_H, -PLANCHE_W / 2);
-  piedLeft.translate(-SUPPORT_W + PIED_W, SUPPORT_H * 2 + PIED_H, 0);
-  piedRight.translate(SUPPORT_W - PIED_W, SUPPORT_H * 2 + PIED_H, 0);
+  piedLeft.translate(-SUPPORT_W + PIED_TABLE_W, SUPPORT_H * 2 + PIED_TABLE_H, 0);
+  piedRight.translate(SUPPORT_W - PIED_TABLE_W, SUPPORT_H * 2 + PIED_TABLE_H, 0);
 
   table.addChild(planche);
   table.addChild(support);
   table.addChild(piedLeft);
   table.addChild(piedRight);
+
+  // descend le centre de la table au niveau du sol
+  table.translate(0, -(SUPPORT_H + PIED_TABLE_H) * 2, 0);
 
   return table;
 }
@@ -90,13 +93,13 @@ PShape createPiedTable() {
 
   PShape piedTable = createCubeMagique(textures, piedColors);
 
-  piedTable.scale(PIED_W, PIED_H, PIED_D);
+  piedTable.scale(PIED_TABLE_W, PIED_TABLE_H, PIED_TABLE_D);
 
   return piedTable;
 }
 
 void loadTableImages() {
   bureau = loadImage("asset/table/bureau.jpg");
-  wood = loadImage("asset/table/wood.jpg");
-  woodTop = loadImage("asset/table/woodTop.jpg");
+  wood = loadImage("asset/table/woodTable.jpg");
+  woodTop = loadImage("asset/table/woodTableTop.jpg");
 }

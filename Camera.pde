@@ -21,8 +21,10 @@ Function<Float, Float> MOVE_Y_CAM = (Float a) -> a * sin(phi);
 Function<Float, Float> MOVE_Z_CAM = (Float a) -> a * cos(phi) * cos(theta);
 
 void moveCenterCamera() {
-  theta += (pmouseX - mouseX) / 100f % TWO_PI;
-  phi += (mouseY - pmouseY) / 100f % TWO_PI;
+  theta += (pmouseX - mouseX) / 100f;
+  phi += (mouseY - pmouseY) / 100f;
+
+  phi = constrain(phi, -PI / 2 + 0.01, PI / 2 - 0.01);
 
   centerX = camX + MOVE_X_CAM.apply(rayon);
   centerY = camY + MOVE_Y_CAM.apply(rayon);

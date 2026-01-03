@@ -1,7 +1,7 @@
 float angle = 0f;
 float s = 500 / 2.0;
 PShader colorShader;
-PImage noTexture;
+PImage noTexture, metal;
 
 PVector[] defaultColors = new PVector[] {
   new PVector(255, 255, 255),
@@ -40,6 +40,7 @@ void initShapes() {
   skybox = createSkyBox();
   salle = createSalle();
   table = createTable();
+  chaise = createChaise();
   debugShapeCam = createDebugShapeCam(10);
   debugZeroZero = createZeroZero(20);
 }
@@ -48,7 +49,9 @@ void loadImages() {
   loadSkyboxImages();
   loadTableImages();
   loadSalleImages();
+  loadChaiseImages();
   noTexture = loadImage("asset/default.jpg");
+  metal = loadImage("asset/silver-metallic.jpg");
 }
 
 void initTexturesArrays() {
@@ -86,7 +89,9 @@ void drawShape() {
   shape(skybox);
   translate(SALLE_W, -SALLE_H, SALLE_D);
   shape(salle);
+  translate(0, SALLE_H, 0);
   shape(table);
+  shape(chaise);
   popMatrix();
 }
 
