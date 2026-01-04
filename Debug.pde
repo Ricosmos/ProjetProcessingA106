@@ -5,7 +5,7 @@ boolean debugMode = false;
 PShape createDebugShapeCam(float size) {
   PShape debugShape = createCubeMagique(missingTextures, debugColors, false);
 
-  debugShape.scale(size, size, size);
+  debugShape.scale(size);
 
   return debugShape;
 }
@@ -22,7 +22,7 @@ PShape createZeroZero(float size) {
 
   PShape debugShape = createCubeMagique(missingTextures, originColors, false);
 
-  debugShape.scale(size, size, size);
+  debugShape.scale(size);
 
   return debugShape;
 }
@@ -47,13 +47,23 @@ void velocityInformation() {
 }
 
 void drawDebug() {
-  if (debugMode) {
-    shape(debugZeroZero);
+  if (debugMode) {	
     pushMatrix();
-    translate(centerX, centerY, centerZ);
-    shape(debugShapeCam);
-    popMatrix();
-    velocityInformation();
+		shape(debugZeroZero);
+
+		for (int i=0; i<lightPos.length; i++) {
+			pushMatrix();
+			translate(lightPos[i].x, lightPos[i].y, lightPos[i].z);
+			shape(debugShapeCam);
+			popMatrix();
+		}
+
+		pushMatrix();
+		translate(centerX, centerY, centerZ);
+		shape(debugShapeCam);
+		popMatrix();
+		velocityInformation();
+	popMatrix();
   }
 }
 

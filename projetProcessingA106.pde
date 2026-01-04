@@ -68,8 +68,13 @@ void initTexturesArrays() {
 void draw() {
   background(0, 0, 150);
 
-  // shader(colorShader);
-  // drawLight();
+  resetShader();
+  pushMatrix();
+  	shape(skybox);
+  popMatrix();
+
+  shader(colorShader);
+  drawLight();
 
   movePositionCamera();
   moveCenterCamera();
@@ -86,12 +91,11 @@ void draw() {
 void drawShape() {
   textureWrap(REPEAT);
   pushMatrix();
-  shape(skybox);
-  translate(SALLE_W, -SALLE_H, SALLE_D);
-  shape(salle);
-  translate(0, SALLE_H, 0);
-  shape(table);
-  shape(chaise);
+	translate(SALLE_W, -SALLE_H, SALLE_D);
+	shape(salle);
+	translate(0, SALLE_H, 0);
+	shape(table);
+	shape(chaise);
   popMatrix();
 }
 

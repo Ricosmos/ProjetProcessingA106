@@ -27,7 +27,6 @@ void drawLight() {
     noStroke();
     emissive(lightColor[i].x, lightColor[i].y, lightColor[i].z);
     translate(lightPos[i].x, lightPos[i].y, lightPos[i].z);
-    // sphere(5);
     popMatrix();
   }
   emissive(0, 0, 0);
