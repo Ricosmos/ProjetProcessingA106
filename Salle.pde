@@ -16,7 +16,7 @@ PShape createSalle() {
     bottom
   };
 
-  PShape salle = createCubeMagique(textures, defaultColors, true, 4);
+  PShape salle = new CubeMagique(textures, defaultColors).invertUVs().invertNormals().withUVTiling(4).build();
 
   salle.scale(SALLE_W, SALLE_H, SALLE_D);
 

@@ -31,6 +31,7 @@ void setup() {
   noStroke();
   loadImages();
   initTexturesArrays();
+  initLights();
   colorShader = loadShader("Lambert1DiffuseFrag.glsl", "Lambert1DiffuseVert.glsl");
   initShapes();
 }
@@ -68,22 +69,19 @@ void initTexturesArrays() {
 void draw() {
   background(0, 0, 150);
 
+  movePositionCamera();
+  moveCenterCamera();
+  camera(
+    camX, camY, camZ,
+    centerX, centerY, centerZ,
+    0, 1, 0);
+
   resetShader();
   pushMatrix();
   shape(skybox);
   popMatrix();
 
   shader(colorShader);
-  drawLight();
-
-  movePositionCamera();
-  moveCenterCamera();
-
-  camera(
-    camX, camY, camZ,
-    centerX, centerY, centerZ,
-    0, 1, 0);
-
   drawShape();
   drawDebug();
 }
@@ -92,6 +90,7 @@ void drawShape() {
   textureWrap(REPEAT);
   pushMatrix();
   translate(SALLE_W, -SALLE_H, SALLE_D);
+  drawLight();
   shape(salle);
   translate(0, SALLE_H, 0);
   shape(table);

@@ -11,7 +11,7 @@ PShape createSkyBox() {
     posy
   };
 
-  PShape skyBox = createCubeMagique(textures, defaultColors);
+  PShape skyBox = new CubeMagique(textures, defaultColors).build();
 
   skyBox.scale(3000, 3000, 3000);
 

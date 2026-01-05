@@ -47,7 +47,7 @@ PShape createPlancheTable() {
     woodTop
   };
 
-  PShape plancheTable = createCubeMagique(textures, defaultColors);
+  PShape plancheTable = new CubeMagique(textures, defaultColors).build();
 
   plancheTable.scale(PLANCHE_W, PLANCHE_H, PLANCHE_D);
 
@@ -64,7 +64,7 @@ PShape createSupportTable() {
     noTexture
   };
 
-  PShape supportTable = createCubeMagique(textures, defaultColors);
+  PShape supportTable = new CubeMagique(textures, defaultColors).build();
 
   supportTable.scale(SUPPORT_W, SUPPORT_H, SUPPORT_D);
 
@@ -91,7 +91,7 @@ PShape createPiedTable() {
     grey
   };
 
-  PShape piedTable = createCubeMagique(textures, piedColors);
+  PShape piedTable = new CubeMagique(textures, piedColors).build();
 
   piedTable.scale(PIED_TABLE_W, PIED_TABLE_H, PIED_TABLE_D);
 

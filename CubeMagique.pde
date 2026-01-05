@@ -56,55 +56,112 @@ PVector[] cubeVertices = {
   new PVector( c, c, -c)  // 7
 };
 
-PShape createCubeMagique(PImage[] textures, PVector[] colors, boolean invertUVs, int uvMultiplier) {
-  /*
-  Bien meilleur que le cube magique de Mathéo en 2023 et de Dorian en 2024 !
-   */
-  PVector[] uvs = invertUVs ? cubeUVsInverted : cubeUVs;
+public class CubeMagique {
+  private PImage[] textures;
+  private PVector[] colors;
 
-  uvs = new PVector[] {
-    new PVector(uvs[0].x * uvMultiplier, uvs[0].y * uvMultiplier),
-    new PVector(uvs[1].x * uvMultiplier, uvs[1].y * uvMultiplier),
-    new PVector(uvs[2].x * uvMultiplier, uvs[2].y * uvMultiplier),
-    new PVector(uvs[3].x * uvMultiplier, uvs[3].y * uvMultiplier)
-  };
+  private boolean invertUVs = false;
+  private int uvMultiplier = 1;
+  private boolean invertNormals = false;
+  private float shininessValue = 200.0;
+  private PVector specular = new PVector(0, 0, 0); 
+  private PVector emissiveColor = new PVector(0, 0, 0);
 
-  PShape cube = createShape(GROUP);
-  cube.addChild( createCubeMagiqueFace(textures[FRONT], colors[FRONT], cubeVertices[FRONT_TL], cubeVertices[FRONT_TR], cubeVertices[FRONT_BR], cubeVertices[FRONT_BL], uvs) );
-  cube.addChild( createCubeMagiqueFace(textures[BACK], colors[BACK], cubeVertices[BACK_TR], cubeVertices[BACK_TL], cubeVertices[BACK_BL], cubeVertices[BACK_BR], uvs) );
-  cube.addChild( createCubeMagiqueFace(textures[RIGHT], colors[RIGHT], cubeVertices[FRONT_TR], cubeVertices[BACK_TR], cubeVertices[BACK_BR], cubeVertices[FRONT_BR], uvs) );
-  cube.addChild( createCubeMagiqueFace(textures[LEFT], colors[LEFT], cubeVertices[BACK_TL], cubeVertices[FRONT_TL], cubeVertices[FRONT_BL], cubeVertices[BACK_BL], uvs) );
-  cube.addChild( createCubeMagiqueFace(textures[BOTTOM], colors[BOTTOM], cubeVertices[FRONT_BL], cubeVertices[FRONT_BR], cubeVertices[BACK_BR], cubeVertices[BACK_BL], uvs) );
-  cube.addChild( createCubeMagiqueFace(textures[TOP], colors[TOP], cubeVertices[BACK_TL], cubeVertices[BACK_TR], cubeVertices[FRONT_TR], cubeVertices[FRONT_TL], uvs) );
+  public CubeMagique(PImage[] textures, PVector[] colors) {
+    this.textures = textures;
+    this.colors = colors;
+  }
 
-  return cube;
-}
+  public CubeMagique withUVTiling(int multiplier) {
+    this.uvMultiplier = multiplier;
+    return this;
+  }
 
-PShape createCubeMagique(PImage[] textures, PVector[] colors) {
-  return createCubeMagique(textures, colors, false, 1);
-}
+  public CubeMagique invertUVs() {
+    this.invertUVs = !this.invertUVs;
+    return this;
+  }
 
-PShape createCubeMagique(PImage[] textures, PVector[] colors, int uvMultiplier) {
-  return createCubeMagique(textures, colors, false, uvMultiplier);
-}
+  public CubeMagique invertNormals() {
+    this.invertNormals = !this.invertNormals;
+    return this;
+  }
 
-PShape createCubeMagique(PImage[] textures, PVector[] colors, boolean invertUVs) {
-  return createCubeMagique(textures, colors, invertUVs, 1);
-}
+  public CubeMagique withShininess(float s) {
+    this.shininessValue = s;
+    return this;
+  }
 
-PShape createCubeMagiqueFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, PVector[] uvs) {
-  PShape face = createShape();
-  face.beginShape(QUAD);
-  face.textureMode(NORMAL);
-  face.shininess(200.0);
-  face.emissive(0, 0, 0);
-  face.texture(tex);
-  face.tint(colors.x, colors.y, colors.z);
-  face.vertex(v0.x, v0.y, v0.z, uvs[0].x, uvs[0].y);
-  face.vertex(v1.x, v1.y, v1.z, uvs[1].x, uvs[1].y);
-  face.vertex(v2.x, v2.y, v2.z, uvs[2].x, uvs[2].y);
-  face.vertex(v3.x, v3.y, v3.z, uvs[3].x, uvs[3].y);
-  face.endShape(CLOSE);
+  public CubeMagique withSpecular(PVector c) {
+    this.specular = c;
+    return this;
+  }
 
-  return face;
+  public CubeMagique withSpecular(float r, float g, float b) {
+    this.specular = new PVector(r, g, b);
+    return this;
+  }
+
+  public CubeMagique withEmissive(PVector c) {
+    this.emissiveColor = c;
+    return this;
+  }
+
+  public CubeMagique withEmissive(float r, float g, float b) {
+    this.emissiveColor = new PVector(r, g, b);
+    return this;
+  }
+
+  // 5. La méthode finale qui génère le PShape
+  public PShape build() {
+    // Préparation des UVs
+    PVector[] uvsToUse = invertUVs ? cubeUVsInverted : cubeUVs;
+    PVector[] scaledUVs = new PVector[4];
+    for (int i=0; i<4; i++) {
+      scaledUVs[i] = new PVector(uvsToUse[i].x * uvMultiplier, uvsToUse[i].y * uvMultiplier);
+    }
+
+    PShape cube = createShape(GROUP);
+
+    cube.addChild(this.createCubeMagiqueFace(textures[FRONT], colors[FRONT], cubeVertices[FRONT_TL], cubeVertices[FRONT_TR], cubeVertices[FRONT_BR], cubeVertices[FRONT_BL], scaledUVs));
+    cube.addChild(this.createCubeMagiqueFace(textures[BACK], colors[BACK], cubeVertices[BACK_TR], cubeVertices[BACK_TL], cubeVertices[BACK_BL], cubeVertices[BACK_BR], scaledUVs));
+    cube.addChild(this.createCubeMagiqueFace(textures[RIGHT], colors[RIGHT], cubeVertices[FRONT_TR], cubeVertices[BACK_TR], cubeVertices[BACK_BR], cubeVertices[FRONT_BR], scaledUVs));
+    cube.addChild(this.createCubeMagiqueFace(textures[LEFT], colors[LEFT], cubeVertices[BACK_TL], cubeVertices[FRONT_TL], cubeVertices[FRONT_BL], cubeVertices[BACK_BL], scaledUVs));
+    cube.addChild(this.createCubeMagiqueFace(textures[BOTTOM], colors[BOTTOM], cubeVertices[FRONT_BL], cubeVertices[FRONT_BR], cubeVertices[BACK_BR], cubeVertices[BACK_BL], scaledUVs));
+    cube.addChild(this.createCubeMagiqueFace(textures[TOP], colors[TOP], cubeVertices[BACK_TL], cubeVertices[BACK_TR], cubeVertices[FRONT_TR], cubeVertices[FRONT_TL], scaledUVs));
+
+    return cube;
+  }
+
+  private PShape createCubeMagiqueFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, PVector[] uvs) {
+    PShape face = createShape();
+    face.beginShape(QUAD);
+    face.textureMode(NORMAL);
+    face.shininess(this.shininessValue);
+    face.emissive(this.emissiveColor.x, this.emissiveColor.y, this.emissiveColor.z);
+    face.specular(this.specular.x, this.specular.y, this.specular.z);
+    face.texture(tex);
+    face.tint(colors.x, colors.y, colors.z);
+
+    // Calculate normal
+    PVector edge1 = PVector.sub(v1, v0);
+    PVector edge2 = PVector.sub(v3, v0);
+    PVector normal = edge1.cross(edge2);
+    normal.normalize();
+    if (invertNormals) {
+      normal.mult(-1);
+    }
+
+    face.normal(normal.x, normal.y, normal.z);
+    face.vertex(v0.x, v0.y, v0.z, uvs[0].x, uvs[0].y);
+    face.normal(normal.x, normal.y, normal.z);
+    face.vertex(v1.x, v1.y, v1.z, uvs[1].x, uvs[1].y);
+    face.normal(normal.x, normal.y, normal.z);
+    face.vertex(v2.x, v2.y, v2.z, uvs[2].x, uvs[2].y);
+    face.normal(normal.x, normal.y, normal.z);
+    face.vertex(v3.x, v3.y, v3.z, uvs[3].x, uvs[3].y);
+    face.endShape(CLOSE);
+
+    return face;
+  }
 }
