@@ -7,23 +7,23 @@ PShape murAvant, murArriere, murGauche, murDroit, plafond, sol;
 PImage bottom, wall;
 
 PShape createSalle() {
-	PImage[] textures = new PImage[] {
-		wall,
-		wall,
-		wall,
-		wall,
-		bottom,
-		bottom
-	};
+  PImage[] textures = new PImage[] {
+    wall,
+    wall,
+    wall,
+    wall,
+    bottom,
+    bottom
+  };
 
-	PShape salle = createCubeMagique(textures, defaultColors, true, 4);
+  PShape salle = createCubeMagique(textures, defaultColors, true, 4);
 
-	salle.scale(SALLE_W, SALLE_H, SALLE_D);
+  salle.scale(SALLE_W, SALLE_H, SALLE_D);
 
-	return salle;
+  return salle;
 }
 
 void loadSalleImages() {
-	bottom = loadImage("asset/salle/laminate_floor_02_diff_1k.jpg");
-	wall = loadImage("asset/salle/wall.jpg");
+  bottom = loadImage("asset/salle/laminate_floor_02_diff_1k.jpg");
+  wall = loadImage("asset/salle/wall.jpg");
 }

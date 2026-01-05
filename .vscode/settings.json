@@ -1,0 +1,20 @@
+{
+    // Utiliser des espaces plutôt que des tabulations
+    "editor.insertSpaces": true,
+    
+    // Taille de l'indentation (Processing standard = 2)
+    "editor.tabSize": 2,
+    
+    // Détecter automatiquement si le fichier utilise déjà un autre format (désactivé pour forcer le 2)
+    "editor.detectIndentation": false,
+
+    // Formater automatiquement dès que vous sauvegardez (très utile)
+    "editor.formatOnSave": true,
+
+    // Configuration spécifique au langage Java (que Processing utilise)
+    "[java]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.defaultFormatter": "redhat.java"
+    }
+}

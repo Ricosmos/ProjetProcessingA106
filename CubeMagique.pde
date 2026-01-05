@@ -1,16 +1,16 @@
 float c = 1; // 1 cm
 
 /*
-    4--------5
-  / |      / |
- /  |     /  |
-0--------1   |
-|   |    |   |
-|   6----|--7
-| /      | /
-|/       |/
-2--------3
-*/
+ *     4--------5
+ *   / |      / |
+ *  /  |     /  |
+ * 0--------1   |
+ * |   |    |   |
+ * |   6----|--7
+ * | /      | /
+ * |/       |/
+ * 2--------3
+ */
 
 // CubeMagique vertex indices
 final int FRONT_TL = 0;
@@ -46,20 +46,20 @@ PVector[] cubeUVsInverted = {
 };
 
 PVector[] cubeVertices = {
-  new PVector(-c, -c,  c), // 0
-  new PVector( c, -c,  c), // 1
-  new PVector(-c,  c,  c), // 2
-  new PVector( c,  c,  c), // 3
+  new PVector(-c, -c, c), // 0
+  new PVector( c, -c, c), // 1
+  new PVector(-c, c, c), // 2
+  new PVector( c, c, c), // 3
   new PVector(-c, -c, -c), // 4
   new PVector( c, -c, -c), // 5
-  new PVector(-c,  c, -c), // 6
-  new PVector( c,  c, -c)  // 7
+  new PVector(-c, c, -c), // 6
+  new PVector( c, c, -c)  // 7
 };
 
 PShape createCubeMagique(PImage[] textures, PVector[] colors, boolean invertUVs, int uvMultiplier) {
   /*
   Bien meilleur que le cube magique de Mathéo en 2023 et de Dorian en 2024 !
-  */
+   */
   PVector[] uvs = invertUVs ? cubeUVsInverted : cubeUVs;
 
   uvs = new PVector[] {

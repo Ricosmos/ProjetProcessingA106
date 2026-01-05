@@ -39,12 +39,12 @@ PShape createTable() {
 
 PShape createPlancheTable() {
   PImage[] textures = new PImage[] {
-	wood,
-	wood,
-	wood,
-	wood,
-	wood,
-	woodTop
+    wood,
+    wood,
+    wood,
+    wood,
+    wood,
+    woodTop
   };
 
   PShape plancheTable = createCubeMagique(textures, defaultColors);
@@ -56,12 +56,12 @@ PShape createPlancheTable() {
 
 PShape createSupportTable() {
   PImage[] textures = new PImage[] {
-	bureau,
-	bureau,
-	bureau,
-	bureau,
-	noTexture,
-	noTexture
+    bureau,
+    bureau,
+    bureau,
+    bureau,
+    noTexture,
+    noTexture
   };
 
   PShape supportTable = createCubeMagique(textures, defaultColors);
@@ -73,12 +73,12 @@ PShape createSupportTable() {
 
 PShape createPiedTable() {
   PImage[] textures = new PImage[] {
-	noTexture,
-	noTexture,
-	noTexture,
-	noTexture,
-	noTexture,
-	noTexture
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture
   };
 
   PVector grey = new PVector(150, 150, 150);
@@ -89,7 +89,7 @@ PShape createPiedTable() {
     grey,
     grey,
     grey
-  };  
+  };
 
   PShape piedTable = createCubeMagique(textures, piedColors);
 

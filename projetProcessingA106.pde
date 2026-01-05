@@ -70,7 +70,7 @@ void draw() {
 
   resetShader();
   pushMatrix();
-  	shape(skybox);
+  shape(skybox);
   popMatrix();
 
   shader(colorShader);
@@ -91,11 +91,11 @@ void draw() {
 void drawShape() {
   textureWrap(REPEAT);
   pushMatrix();
-	translate(SALLE_W, -SALLE_H, SALLE_D);
-	shape(salle);
-	translate(0, SALLE_H, 0);
-	shape(table);
-	shape(chaise);
+  translate(SALLE_W, -SALLE_H, SALLE_D);
+  shape(salle);
+  translate(0, SALLE_H, 0);
+  shape(table);
+  shape(chaise);
   popMatrix();
 }
 

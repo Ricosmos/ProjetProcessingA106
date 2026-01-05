@@ -49,21 +49,21 @@ void velocityInformation() {
 void drawDebug() {
   if (debugMode) {	
     pushMatrix();
-		shape(debugZeroZero);
+    shape(debugZeroZero);
 
-		for (int i=0; i<lightPos.length; i++) {
-			pushMatrix();
-			translate(lightPos[i].x, lightPos[i].y, lightPos[i].z);
-			shape(debugShapeCam);
-			popMatrix();
-		}
+    for (int i=0; i<lightPos.length; i++) {
+      pushMatrix();
+      translate(lightPos[i].x, lightPos[i].y, lightPos[i].z);
+      shape(debugShapeCam);
+      popMatrix();
+    }
 
-		pushMatrix();
-		translate(centerX, centerY, centerZ);
-		shape(debugShapeCam);
-		popMatrix();
-		velocityInformation();
-	popMatrix();
+    pushMatrix();
+    translate(centerX, centerY, centerZ);
+    shape(debugShapeCam);
+    popMatrix();
+    velocityInformation();
+    popMatrix();
   }
 }
 
@@ -73,7 +73,7 @@ void keyDebugMode() {
 
 void keyPressedDebug() {
   if (key == 'i' || key == 'I') {
-  	keyDebugMode();
+    keyDebugMode();
     print("Debug mode: " + debugMode);
   }
 }
