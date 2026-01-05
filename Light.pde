@@ -1,20 +1,24 @@
-PVector[] lightPos = {
-  new PVector(700, -700, 700),
-  new PVector(-700, 700, 700),
-  new PVector(-700, 700, -700),
-  new PVector(0, -700, 0)
-};
+PVector[] lightPos;
+PVector[] lightColor;
 
-PVector[] lightColor = {
-  new PVector(255, 255, 255),
-  new PVector(40, 100, 255),
-  new PVector(255, 200, 55),
-  new PVector(255, 0, 0)
-};
+void initLights() {
+  lightPos = new PVector[] {
+    new PVector(SALLE_W/3, -SALLE_H + 20, SALLE_D/3),
+    new PVector(-SALLE_W/3, -SALLE_H + 20, SALLE_D/3),
+    new PVector(-SALLE_W/3, -SALLE_H + 20, -SALLE_D/3),
+    new PVector(SALLE_W/3, -SALLE_H + 20, -SALLE_D/3)
+  };
+
+  lightColor = new PVector[] {
+    new PVector(50, 50, 50),
+    new PVector(50, 50, 50),
+    new PVector(50, 50, 50),
+    new PVector(50, 50, 50),
+  };
+}
 
 void drawLight() {
-  ambientLight(10, 10, 10);
-
+  ambientLight(60, 60, 60);
   for (int i=0; i<lightPos.length; i++) {
     lightSpecular(lightColor[i].x, lightColor[i].y, lightColor[i].z);
     pointLight(lightColor[i].x, lightColor[i].y, lightColor[i].z,
@@ -27,6 +31,9 @@ void drawLight() {
     noStroke();
     emissive(lightColor[i].x, lightColor[i].y, lightColor[i].z);
     translate(lightPos[i].x, lightPos[i].y, lightPos[i].z);
+    if (debugMode) {
+      shape(debugShapeCam);
+    }
     popMatrix();
   }
   emissive(0, 0, 0);
