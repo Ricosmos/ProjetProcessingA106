@@ -53,6 +53,7 @@ void drawDebug() {
 
     for (int i=0; i<lightPos.length; i++) {
       pushMatrix();
+      translate(SALLE_W, -SALLE_H, SALLE_D);
       translate(lightPos[i].x, lightPos[i].y, lightPos[i].z);
       shape(debugShapeCam);
       popMatrix();

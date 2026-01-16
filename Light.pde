@@ -24,17 +24,4 @@ void drawLight() {
     pointLight(lightColor[i].x, lightColor[i].y, lightColor[i].z,
       lightPos[i].x, lightPos[i].y, lightPos[i].z);
   }
-
-  fill(255);
-  for (int i=0; i<lightPos.length; i++) {
-    pushMatrix();
-    noStroke();
-    emissive(lightColor[i].x, lightColor[i].y, lightColor[i].z);
-    translate(lightPos[i].x, lightPos[i].y, lightPos[i].z);
-    if (debugMode) {
-      shape(debugShapeCam);
-    }
-    popMatrix();
-  }
-  emissive(0, 0, 0);
 }
