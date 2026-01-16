@@ -1,6 +1,7 @@
 PShape debugShapeCam, debugZeroZero;
 
 boolean debugMode = false;
+boolean flashlightDebug = false;
 
 PShape createDebugShapeCam(float size) {
   PShape debugShape = new CubeMagique(missingTextures, debugColors).build();
@@ -28,6 +29,7 @@ PShape createZeroZero(float size) {
 }
 
 void velocityInformation() {
+  pushMatrix();
   hint(DISABLE_DEPTH_TEST);
   camera();
   textSize(16);
@@ -44,11 +46,18 @@ void velocityInformation() {
   // text("movingZPos: " + movingZPos + " movingZNeg: " + movingZNeg, 10, 180);
 
   hint(ENABLE_DEPTH_TEST);
+  popMatrix();
+}
+
+void drawFlashlightDebug() {
+  if (flashlightDebug) {
+    lightSpecular(255, 255, 255);
+    pointLight(100, 100, 100, camX, camY, camZ);
+  }
 }
 
 void drawDebug() {
-  if (debugMode) {	
-    pushMatrix();
+  if (debugMode) {
     shape(debugZeroZero);
 
     for (int i=0; i<lightPos.length; i++) {
@@ -61,10 +70,9 @@ void drawDebug() {
 
     pushMatrix();
     translate(centerX, centerY, centerZ);
-    shape(debugShapeCam);
+    // shape(debugShapeCam);
     popMatrix();
     velocityInformation();
-    popMatrix();
   }
 }
 
@@ -76,5 +84,10 @@ void keyPressedDebug() {
   if (key == 'i' || key == 'I') {
     keyDebugMode();
     print("Debug mode: " + debugMode);
+  }
+
+  if (key == 'f' || key == 'F') {
+    flashlightDebug = !flashlightDebug;
+    print("Flashlight debug: " + flashlightDebug);
   }
 }

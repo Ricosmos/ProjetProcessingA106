@@ -64,7 +64,7 @@ public class CubeMagique {
   private int uvMultiplier = 1;
   private boolean invertNormals = false;
   private float shininessValue = 200.0;
-  private PVector specular = new PVector(0, 0, 0); 
+  private PVector specular = new PVector(0, 0, 0);
   private PVector emissiveColor = new PVector(0, 0, 0);
 
   public CubeMagique(PImage[] textures, PVector[] colors) {
@@ -112,9 +112,7 @@ public class CubeMagique {
     return this;
   }
 
-  // 5. La méthode finale qui génère le PShape
   public PShape build() {
-    // Préparation des UVs
     PVector[] uvsToUse = invertUVs ? cubeUVsInverted : cubeUVs;
     PVector[] scaledUVs = new PVector[4];
     for (int i=0; i<4; i++) {

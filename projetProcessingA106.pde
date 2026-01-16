@@ -34,6 +34,9 @@ void setup() {
   initLights();
   colorShader = loadShader("Lambert1DiffuseFrag.glsl", "Lambert1DiffuseVert.glsl");
   initShapes();
+
+  print("Press 'i' to toggle debug info.\n");
+  print("Press 'f' to toggle flashlight (for debug use).\n");
 }
 
 void initShapes() {
@@ -82,6 +85,7 @@ void draw() {
   popMatrix();
 
   shader(colorShader);
+  drawFlashlightDebug();
   drawShape();
   drawDebug();
 }
