@@ -96,9 +96,12 @@ void drawShape() {
   translate(SALLE_W, -SALLE_H, SALLE_D);
   drawLight();
   shape(salle);
-  translate(0, SALLE_H, 0);
-  shape(table);
-  shape(chaise);
+  translate(0, SALLE_H, -SALLE_D);
+  drawRangees(SALLE_W, 150, 4);
+  drawRangees(SALLE_W, 200, 6);
+  drawRangees(SALLE_W, 300, 6);
+  drawRangees(SALLE_W, 400, 5);
+  drawRangees(SALLE_W, 500, 3);
   popMatrix();
 }
 
@@ -109,15 +112,6 @@ boolean keyAction(char keyInput, boolean state, boolean value) {
   return state;
 }
 
-void mouseWheel(MouseEvent event) {
-  if (event.getCount() > 0) {
-    rayon += 20;
-  } else {
-    rayon -= 20;
-  }
-}
-
-
 void keyPressed() {
   cameraKeyPressed();
   keyPressedDebug();
@@ -125,4 +119,14 @@ void keyPressed() {
 
 void keyReleased() {
   cameraKeyReleased();
+}
+
+void drawRangees(float startX, float startZ, int count) {
+  for (int i = 0; i < count; i++) {
+    pushMatrix();
+    translate(startX - PLANCHE_W - i * (PLANCHE_W * 2), 0, startZ);
+    shape(table);
+    shape(chaise);
+    popMatrix();
+  }
 }

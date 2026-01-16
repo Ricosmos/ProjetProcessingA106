@@ -38,7 +38,7 @@ PShape createChaise() {
   chaise.addChild(piedBackRight);
 
   // descend le centre de la chaise au niveau du sol
-  chaise.translate(0, -PIED_CHAISE_H * 2, 0);
+  chaise.translate(0, -PIED_CHAISE_H * 2, PLANCHE_D);
 
   return chaise;
 }
