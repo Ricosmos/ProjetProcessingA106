@@ -102,6 +102,11 @@ public class CubeMagique {
     return this;
   }
 
+  public CubeMagique withSpecular(float v) {
+    this.specular = new PVector(v, v, v);
+    return this;
+  }
+
   public CubeMagique withEmissive(PVector c) {
     this.emissiveColor = c;
     return this;
@@ -109,6 +114,11 @@ public class CubeMagique {
 
   public CubeMagique withEmissive(float r, float g, float b) {
     this.emissiveColor = new PVector(r, g, b);
+    return this;
+  }
+
+  public CubeMagique withEmissive(float v) {
+    this.emissiveColor = new PVector(v, v, v);
     return this;
   }
 
@@ -135,10 +145,11 @@ public class CubeMagique {
     PShape face = createShape();
     face.beginShape(QUAD);
     face.textureMode(NORMAL);
+    face.texture(tex);
+
     face.shininess(this.shininessValue);
     face.emissive(this.emissiveColor.x, this.emissiveColor.y, this.emissiveColor.z);
     face.specular(this.specular.x, this.specular.y, this.specular.z);
-    face.texture(tex);
     face.tint(colors.x, colors.y, colors.z);
 
     // Calculate normal

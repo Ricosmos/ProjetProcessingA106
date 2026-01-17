@@ -9,16 +9,20 @@ void initLights() {
   lightPos = new PVector[] {
     new PVector(SALLE_W/3, LIGHT_ROOF_Y, SALLE_D/2),
     new PVector(-SALLE_W/3, LIGHT_ROOF_Y, SALLE_D/2),
+    new PVector(SALLE_W/3, LIGHT_ROOF_Y, 0),
+    new PVector(-SALLE_W/3, LIGHT_ROOF_Y, 0),
     new PVector(-SALLE_W/3, LIGHT_ROOF_Y, -SALLE_D/2),
     new PVector(SALLE_W/3, LIGHT_ROOF_Y, -SALLE_D/2),
     new PVector(-2000, -250, 200) // Soleil
   };
 
   lightColor = new PVector[] {
-    new PVector(255, 241, 224).mult(0.3),
-    new PVector(255, 241, 224).mult(0.3),
-    new PVector(255, 241, 224).mult(0.3),
-    new PVector(255, 241, 224).mult(0.3),
+    new PVector(255, 241, 224).mult(0.2),
+    new PVector(255, 241, 224).mult(0.2),
+    new PVector(255, 241, 224).mult(0.2),
+    new PVector(255, 241, 224).mult(0.2),
+    new PVector(255, 241, 224).mult(0.2),
+    new PVector(255, 241, 224).mult(0.2),
     new PVector(255, 147, 41).mult(0.5),
   };
 
@@ -28,7 +32,6 @@ void initLights() {
 void drawLight() {
   ambientLight(15, 15, 15);
   for (int i=0; i<lightPos.length; i++) {
-
     pushMatrix();
     lightSpecular(lightColor[i].x, lightColor[i].y, lightColor[i].z);
     pointLight(lightColor[i].x, lightColor[i].y, lightColor[i].z,
@@ -43,7 +46,7 @@ void drawLight() {
 
 PShape createLightShape() {
   PShape light = new CubeMagique(missingTextures, defaultColors).withEmissive(255, 255, 255).build();
-  light.scale(20, 10, 50);
+  light.scale(20, 5, 50);
 
   return light;
 }

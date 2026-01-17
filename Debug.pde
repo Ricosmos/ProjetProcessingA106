@@ -1,7 +1,6 @@
 PShape debugShapeCam, debugZeroZero;
 
 boolean debugMode = false;
-boolean flashlightDebug = false;
 
 PShape createDebugShapeCam(float size) {
   PShape debugShape = new CubeMagique(missingTextures, debugColors).build();
@@ -49,13 +48,6 @@ void velocityInformation() {
   popMatrix();
 }
 
-void drawFlashlightDebug() {
-  if (flashlightDebug) {
-    lightSpecular(255, 255, 255);
-    pointLight(100, 100, 100, camX, camY, camZ);
-  }
-}
-
 void drawDebug() {
   if (debugMode) {
     shape(debugZeroZero);
@@ -84,10 +76,5 @@ void keyPressedDebug() {
   if (key == 'i' || key == 'I') {
     keyDebugMode();
     print("Debug mode: " + debugMode);
-  }
-
-  if (key == 'f' || key == 'F') {
-    flashlightDebug = !flashlightDebug;
-    print("Flashlight debug: " + flashlightDebug);
   }
 }

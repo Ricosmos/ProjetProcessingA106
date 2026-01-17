@@ -36,7 +36,6 @@ void setup() {
   initShapes();
 
   print("Press 'i' to toggle debug info.\n");
-  print("Press 'f' to toggle flashlight (for debug use).\n");
 }
 
 void initShapes() {
@@ -85,7 +84,6 @@ void draw() {
   popMatrix();
 
   shader(colorShader);
-  drawFlashlightDebug();
   drawShape();
   drawDebug();
 }
@@ -97,11 +95,11 @@ void drawShape() {
   drawLight();
   shape(salle);
   translate(0, SALLE_H, -SALLE_D);
-  drawRangees(SALLE_W, 150, 4);
-  drawRangees(SALLE_W, 200, 6);
-  drawRangees(SALLE_W, 300, 6);
-  drawRangees(SALLE_W, 400, 5);
-  drawRangees(SALLE_W, 500, 3);
+  drawRangees(SALLE_W, 200, 4);
+  drawRangees(SALLE_W, 350, 6);
+  drawRangees(SALLE_W, 500, 6);
+  drawRangees(SALLE_W, 650, 5);
+  drawRangees(SALLE_W, 800, 3);
   popMatrix();
 }
 

@@ -52,7 +52,7 @@ PShape createSol() {
     bottom
   };
 
-  PShape sol = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build();
+  PShape sol = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).withShininess(100).withSpecular(255).build();
   sol.scale(SALLE_W, EPAISSEUR, SALLE_D);
 
   return sol;
