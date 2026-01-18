@@ -44,6 +44,7 @@ void initShapes() {
   salle = createSalle();
   table = createTable();
   chaise = createChaise();
+  ecranSpeechi = createEcran();
   debugShapeCam = createDebugShapeCam(10);
   debugZeroZero = createZeroZero(20);
 }
@@ -91,15 +92,25 @@ void draw() {
 void drawShape() {
   textureWrap(REPEAT);
   pushMatrix();
+
   translate(SALLE_W, -SALLE_H, SALLE_D);
   drawLight();
+
   shape(salle);
   translate(0, SALLE_H, -SALLE_D);
+
   drawRangees(SALLE_W, 200, 4);
   drawRangees(SALLE_W, 350, 6);
   drawRangees(SALLE_W, 500, 6);
   drawRangees(SALLE_W, 650, 5);
   drawRangees(SALLE_W, 800, 3);
+
+  pushMatrix();
+  translate(-SALLE_W / 4.0 * 2.5, 0, 110);
+  rotateY(PI / 4);
+  shape(ecranSpeechi);
+  popMatrix();
+
   popMatrix();
 }
 
