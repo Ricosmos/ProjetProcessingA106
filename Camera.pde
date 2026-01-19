@@ -7,7 +7,7 @@ float rayon = 300;
 
 // Angle de la camera avec le sujet sur le plan XZ.
 float theta = 0;
-float phi = 10;
+float phi = 0;
 
 // Position cartésienne de la camera
 // calculée à partir du rayon et de l'angle.

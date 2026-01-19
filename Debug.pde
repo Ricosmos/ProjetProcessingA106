@@ -62,7 +62,7 @@ void drawDebug() {
 
     pushMatrix();
     translate(centerX, centerY, centerZ);
-    // shape(debugShapeCam);
+    shape(debugShapeCam);
     popMatrix();
     velocityInformation();
   }

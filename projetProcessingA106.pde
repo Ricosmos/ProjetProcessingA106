@@ -54,6 +54,7 @@ void loadImages() {
   loadTableImages();
   loadSalleImages();
   loadChaiseImages();
+  loadTexturesecranSpeechi();
   noTexture = loadImage("asset/default.jpg");
   metal = loadImage("asset/silver-metallic.jpg");
 }
