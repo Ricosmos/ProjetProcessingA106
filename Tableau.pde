@@ -77,5 +77,5 @@ PShape createTableauVert() {
 }
 
 void loadTableauImages() {
-  textureTableau = loadImage("asset/tableau/tableau.jpg");
+  textureTableau = loadImage("asset/tableau.jpg");
 }

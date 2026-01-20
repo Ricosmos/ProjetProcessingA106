@@ -126,5 +126,5 @@ PShape createSupportPiedEcran() {
 }
 
 void loadTexturesecranSpeechi() {
-  screenTexture = loadImage("asset/ecranSpeechi/yellowstone-NationalGeographic_1743804.jpg");
+  screenTexture = loadImage("asset/yellowstone-NationalGeographic_1743804.jpg");
 }

@@ -95,5 +95,5 @@ PShape createPiedChaise() {
 }
 
 void loadChaiseImages() {
-  woodChaise = loadImage("asset/chaise/woodChair.jpg");
+  woodChaise = loadImage("asset/woodChair.jpg");
 }
