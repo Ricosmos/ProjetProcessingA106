@@ -49,6 +49,7 @@ void initShapes() {
   debugShapeCam = createDebugShapeCam(10);
   debugZeroZero = createZeroZero(20);
   tableau = createTableau();
+  tableau.translate(0, -HAUTEUR_TABLEAU, 0);
 }
 
 void loadImages() {

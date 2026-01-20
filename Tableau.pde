@@ -2,10 +2,9 @@ final int TABLEAU_W = 400 / 2;
 final int TABLEAU_H = 122 / 2;
 final int TABLEAU_D = 4 / 2;
 
-final int HAUTEUR_TABLEAU = 81 / 2;
+final int HAUTEUR_TABLEAU = 81;
 
 final int CADRE_TABLEAU_EPAISSEUR_HAUT = 4 / 2;
-final int CADRE_TABLEAU_EPAISSEUR_LATERAL = CADRE_TABLEAU_EPAISSEUR_HAUT;
 final int CADRE_TABLEAU_EPAISSEUR_BAS = 10 / 2;
 
 PShape tableau;
@@ -21,50 +20,41 @@ PVector[] colorTableau = new PVector[] {
 };
 
 PShape createTableau() {
-  PShape table = createShape(GROUP);
+  PShape tableau = createShape(GROUP);
 
   PShape cadre = createCadreTableau();
   PShape tableauVert = createTableauVert();
 
-  tableauVert.translate(0, 0, TABLEAU_D / 2 + 0.1f);
-  table.addChild(cadre);
-  table.addChild(tableauVert);
-  table.translate(0, HAUTEUR_TABLEAU, -SALLE_D / 2 + TABLEAU_D);
+  tableau.addChild(cadre);
+  tableau.addChild(tableauVert);
+  tableau.translate(0, -(TABLEAU_H + CADRE_TABLEAU_EPAISSEUR_BAS * 2), 0);
 
-  return table;
+  return tableau;
 }
 
 PShape createCadreTableau() {
   PShape cadreTableau = createShape(GROUP);
 
-  PVector[] colors = new PVector[] {
-    new PVector(255, 255, 255),
-    new PVector(255, 255, 255),
-    new PVector(139, 69, 19),
-    new PVector(139, 69, 19),
-    new PVector(139, 69, 19),
-    new PVector(139, 69, 19)
+  PImage[] missingTextures = new PImage[] {
+    metal,
+    metal,
+    metal,
+    metal,
+    metal,
+    metal
   };
 
-  PShape cadreTableauHaut = new CubeMagique(missingTextures, colors).build();
-  PShape cadreTableauBas = new CubeMagique(missingTextures, colors).build();
-  PShape cadreTableauGauche = new CubeMagique(missingTextures, colors).build();
-  PShape cadreTableauDroite = new CubeMagique(missingTextures, colors).build();
+  PShape cadreTableauHaut = new CubeMagique(missingTextures, defaultColors).withUVTiling(4).build();
+  PShape cadreTableauBas = new CubeMagique(missingTextures, defaultColors).withUVTiling(4).build();
 
-  cadreTableauHaut.scale(TABLEAU_W + CADRE_TABLEAU_EPAISSEUR_LATERAL * 2, CADRE_TABLEAU_EPAISSEUR_HAUT, CADRE_TABLEAU_EPAISSEUR_LATERAL);
-  cadreTableauBas.scale(TABLEAU_W + CADRE_TABLEAU_EPAISSEUR_BAS * 2, CADRE_TABLEAU_EPAISSEUR_BAS, CADRE_TABLEAU_EPAISSEUR_LATERAL);
-  cadreTableauGauche.scale(CADRE_TABLEAU_EPAISSEUR_LATERAL, TABLEAU_H, CADRE_TABLEAU_EPAISSEUR_LATERAL);
-  cadreTableauDroite.scale(CADRE_TABLEAU_EPAISSEUR_LATERAL, TABLEAU_H, CADRE_TABLEAU_EPAISSEUR_LATERAL);
+  cadreTableauHaut.scale(TABLEAU_W, CADRE_TABLEAU_EPAISSEUR_HAUT, TABLEAU_D + 1);
+  cadreTableauBas.scale(TABLEAU_W, CADRE_TABLEAU_EPAISSEUR_BAS, TABLEAU_D + 1);
 
-  cadreTableauHaut.translate(0, - (TABLEAU_H / 2 + CADRE_TABLEAU_EPAISSEUR_HAUT / 2), 0);
-  cadreTableauBas.translate(0, TABLEAU_H / 2 + CADRE_TABLEAU_EPAISSEUR_BAS / 2, 0);
-  cadreTableauGauche.translate(- (TABLEAU_W / 2 + CADRE_TABLEAU_EPAISSEUR_BAS / 2), 0, 0);
-  cadreTableauDroite.translate(TABLEAU_W / 2 + CADRE_TABLEAU_EPAISSEUR_BAS / 2, 0, 0);
+  cadreTableauHaut.translate(0, - (TABLEAU_H + CADRE_TABLEAU_EPAISSEUR_HAUT), 0);
+  cadreTableauBas.translate(0, TABLEAU_H + CADRE_TABLEAU_EPAISSEUR_BAS, 0);
 
   cadreTableau.addChild(cadreTableauHaut);
   cadreTableau.addChild(cadreTableauBas);
-  cadreTableau.addChild(cadreTableauGauche);
-  cadreTableau.addChild(cadreTableauDroite);
 
   return cadreTableau;
 }
