@@ -37,6 +37,11 @@ void drawLight() {
     pointLight(lightColor[i].x, lightColor[i].y, lightColor[i].z,
       lightPos[i].x, lightPos[i].y, lightPos[i].z);
 
+    if (i == lightPos.length - 1) { // Soleil
+      popMatrix();
+      continue;
+    }
+
     translate(lightPos[i].x, lightPos[i].y - 100, lightPos[i].z);
     shape(light);
 

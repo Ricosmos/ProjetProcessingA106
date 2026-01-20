@@ -36,10 +36,11 @@ void setup() {
   initShapes();
 
   print("Press 'i' to toggle debug info.\n");
+  print("Use Z Q S D keys to move the camera forward, left, backward, right.\n");
+  print("Move the mouse to look around.\n");
 }
 
 void initShapes() {
-  //textureWrap(REPEAT);
   skybox = createSkyBox();
   salle = createSalle();
   table = createTable();
@@ -47,6 +48,7 @@ void initShapes() {
   ecranSpeechi = createEcran();
   debugShapeCam = createDebugShapeCam(10);
   debugZeroZero = createZeroZero(20);
+  tableau = createTableau();
 }
 
 void loadImages() {
@@ -55,6 +57,7 @@ void loadImages() {
   loadSalleImages();
   loadChaiseImages();
   loadTexturesecranSpeechi();
+  loadTableauImages();
   noTexture = loadImage("asset/default.jpg");
   metal = loadImage("asset/silver-metallic.jpg");
 }
@@ -99,6 +102,8 @@ void drawShape() {
 
   shape(salle);
   translate(0, SALLE_H, -SALLE_D);
+
+  shape(tableau);
 
   drawRangees(SALLE_W, 200, 4);
   drawRangees(SALLE_W, 350, 6);

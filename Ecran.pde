@@ -3,7 +3,7 @@ final int ECRAN_H = 102 / 2;
 final int ECRAN_D = 4 / 2;
 
 final int PIED_ECRAN_W = 20 / 2;
-final int PIED_ECRAN_H = 111 / 2;
+final int PIED_ECRAN_H = 160 / 2;
 final int PIED_ECRAN_D = 15 / 2;
 
 final int SUPPORT_PIED_ECRAN_W = 140 / 2;
@@ -34,7 +34,7 @@ PShape createEcran() {
   PShape pied = createPiedEcran();
   PShape supportPied = createSupportPiedEcran();
 
-  ecran.translate(0, -ECRAN_H, -SUPPORT_PIED_ECRAN_LATERAL_D / 3);
+  ecran.translate(0, PIED_ECRAN_H / 2, -SUPPORT_PIED_ECRAN_LATERAL_D / 3 + SUPPORT_PIED_ECRAN_D);
   pied.translate(0, PIED_ECRAN_H, -SUPPORT_PIED_ECRAN_LATERAL_D / 3);
   supportPied.translate(0, PIED_ECRAN_H * 2 + SUPPORT_PIED_ECRAN_H, 0);
 
