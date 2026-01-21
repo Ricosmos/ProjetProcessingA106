@@ -3,6 +3,7 @@ final int SALLE_H = 280 / 2;
 final int SALLE_D = 980 / 2;
 final int EPAISSEUR = 10 / 2;
 final int LONGUEUR_PILLIER_MUR = SALLE_W / 8;
+final int MUR_GAUCHE_HAUT_H = 20 / 2;
 
 final int MUR_UV_TILING = 4;
 
@@ -22,7 +23,7 @@ PShape createSalle() {
 
   sol.translate(0, SALLE_H + EPAISSEUR, 0);
   plafond.translate(0, -SALLE_H - EPAISSEUR, 0);
-  murGauche.translate(-SALLE_W - EPAISSEUR, SALLE_H - SALLE_H / 3, 0);
+  murGauche.translate(-SALLE_W - EPAISSEUR, 0, 0);
   murDroit.translate(SALLE_W + EPAISSEUR, 0, 0);
   murAvant.translate(0, 0, SALLE_D + EPAISSEUR);
   murArriere.translate(0, 0, -SALLE_D - EPAISSEUR);
@@ -77,6 +78,8 @@ PShape createPlafond() {
 
 PShape createMurGauche() {
   PShape murGaucheEntier = createShape(GROUP);
+  murGaucheEntier.translate(0, SALLE_H, 0);
+
   PImage[] textures = new PImage[] {
     noTexture,
     noTexture,
@@ -95,14 +98,21 @@ PShape createMurGauche() {
     new PVector(0, 0, 0),
   };
 
-  PShape murGauche = new CubeMagique(textures, colors).withUVTiling(MUR_UV_TILING).build();
-  murGauche.scale(EPAISSEUR, SALLE_H / 3, SALLE_D);
+  PShape murGaucheBas = new CubeMagique(textures, colors).withUVTiling(MUR_UV_TILING).build();
+  PShape murGaucheHaut = new CubeMagique(textures, colors).build();
 
-  murGaucheEntier.addChild(murGauche);
+  murGaucheBas.scale(EPAISSEUR, SALLE_H / 3, SALLE_D);
+  murGaucheHaut.scale(EPAISSEUR, MUR_GAUCHE_HAUT_H, SALLE_D);
+
+  murGaucheBas.translate(0, -SALLE_H / 3, 0);
+  murGaucheHaut.translate(0, (-SALLE_H * 2) + MUR_GAUCHE_HAUT_H, 0);
+
+  murGaucheEntier.addChild(murGaucheBas);
+  murGaucheEntier.addChild(murGaucheHaut);
 
   for (int i : new int[] {SALLE_D - LONGUEUR_PILLIER_MUR, 0, -SALLE_D + LONGUEUR_PILLIER_MUR}) {
     PShape pillier = createPillierMur(LONGUEUR_PILLIER_MUR);
-    pillier.translate(0, -SALLE_H, i);
+    pillier.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, i);
     murGaucheEntier.addChild(pillier);
   }
 
@@ -120,7 +130,7 @@ PShape createPillierMur(int longueur) {
   };
 
   PShape pillierMur = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build();
-  pillierMur.scale(EPAISSEUR, SALLE_H - SALLE_H / 3, longueur);
+  pillierMur.scale(EPAISSEUR, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, longueur);
 
   return pillierMur;
 }

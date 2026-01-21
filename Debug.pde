@@ -61,6 +61,11 @@ void drawDebug() {
     }
 
     pushMatrix();
+    translate(SALLE_W, -SALLE_H, SALLE_D);
+    shape(debugZeroZero);
+    popMatrix();
+
+    pushMatrix();
     translate(centerX, centerY, centerZ);
     shape(debugShapeCam);
     popMatrix();
