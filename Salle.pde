@@ -112,16 +112,21 @@ PShape createMurGauche() {
   murGaucheEntier.addChild(murGaucheBas);
   murGaucheEntier.addChild(murGaucheHaut);
 
-  int[] positionsPilliers = new int[] {SALLE_D - LONGUEUR_PILLIER_MUR, 0, -SALLE_D + LONGUEUR_PILLIER_MUR};
+  float[] positionsPilliers = new float[] {SALLE_D - LONGUEUR_PILLIER_MUR, 0, -SALLE_D + LONGUEUR_PILLIER_MUR};
 
   for (int i = 0; i < positionsPilliers.length; i++) {
     PShape pillier = createPillierMur(LONGUEUR_PILLIER_MUR);
     pillier.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i]);
     murGaucheEntier.addChild(pillier);
 
-    if (i < positionsPilliers.length - 1) {
+    if (i > 0) {
+      PShape debug = new CubeMagique(missingTextures, debugColors).build();
+      debug.scale(10, 10, 10);
+      debug.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i] + LONGUEUR_PILLIER_MUR + (SALLE_W - LONGUEUR_PILLIER_MUR * 3));
+      murGaucheEntier.addChild(debug);
+
       PShape glassPane = createGlassPane();
-      glassPane.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i] + (LONGUEUR_PILLIER_MUR * 3 - SALLE_W) + LONGUEUR_PILLIER_MUR * 2);
+      glassPane.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i] + LONGUEUR_PILLIER_MUR + (SALLE_W - LONGUEUR_PILLIER_MUR * 3));
       murGaucheEntier.addChild(glassPane);
     }
   }
@@ -129,7 +134,7 @@ PShape createMurGauche() {
   return murGaucheEntier;
 }
 
-PShape createPillierMur(int longueur) {
+PShape createPillierMur(float longueur) {
   PImage[] textures = new PImage[] {
     noTexture,
     noTexture,
@@ -139,7 +144,16 @@ PShape createPillierMur(int longueur) {
     noTexture
   };
 
-  PShape pillierMur = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build();
+  PVector[] colors = new PVector[] {
+    new PVector(0, 0, 0),
+    new PVector(0, 0, 0),
+    new PVector(255, 255, 255),
+    new PVector(255, 255, 255),
+    new PVector(0, 0, 0),
+    new PVector(0, 0, 0)
+  };
+
+  PShape pillierMur = new CubeMagique(textures, colors).withUVTiling(MUR_UV_TILING).build();
   pillierMur.scale(EPAISSEUR, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, longueur);
 
   return pillierMur;
@@ -157,7 +171,7 @@ PShape createGlassPane() {
 
   PShape glassPane = new CubeMagique(textures, defaultColors).build();
 
-  int longueur = (LONGUEUR_PILLIER_MUR * 3 - SALLE_W);
+  int longueur = (SALLE_W - LONGUEUR_PILLIER_MUR * 3);
 
   glassPane.scale(EPAISSEUR_GLASS_PANE, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, longueur);
 
