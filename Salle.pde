@@ -2,6 +2,7 @@ final int SALLE_W = 600 / 2;
 final int SALLE_H = 280 / 2;
 final int SALLE_D = 980 / 2;
 final int EPAISSEUR = 10 / 2;
+final int EPAISSEUR_GLASS_PANE = 5 / 2;
 final int LONGUEUR_PILLIER_MUR = SALLE_W / 8;
 final int MUR_GAUCHE_HAUT_H = 20 / 2;
 
@@ -9,7 +10,7 @@ final int MUR_UV_TILING = 4;
 
 PShape salle;
 PShape murAvant, murArriere, murGauche, murDroit, plafond, sol;
-PImage bottom, wall, roof;
+PImage bottom, wall, roof, glassPane;
 
 PShape createSalle() {
   PShape salle = createShape(GROUP);
@@ -42,6 +43,7 @@ void loadSalleImages() {
   bottom = loadImage("asset/salle/laminate_floor_02_diff_1k.jpg");
   wall = loadImage("asset/salle/wall.jpg");
   roof = loadImage("asset/salle/demountable-ceiling-tile-stack-2440-mm.jpg");
+  glassPane = loadImage("asset/salle/glass_pane.png");
 }
 
 PShape createSol() {
@@ -110,10 +112,18 @@ PShape createMurGauche() {
   murGaucheEntier.addChild(murGaucheBas);
   murGaucheEntier.addChild(murGaucheHaut);
 
-  for (int i : new int[] {SALLE_D - LONGUEUR_PILLIER_MUR, 0, -SALLE_D + LONGUEUR_PILLIER_MUR}) {
+  int[] positionsPilliers = new int[] {SALLE_D - LONGUEUR_PILLIER_MUR, 0, -SALLE_D + LONGUEUR_PILLIER_MUR};
+
+  for (int i = 0; i < positionsPilliers.length; i++) {
     PShape pillier = createPillierMur(LONGUEUR_PILLIER_MUR);
-    pillier.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, i);
+    pillier.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i]);
     murGaucheEntier.addChild(pillier);
+
+    if (i < positionsPilliers.length - 1) {
+      PShape glassPane = createGlassPane();
+      glassPane.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i] + (LONGUEUR_PILLIER_MUR * 3 - SALLE_W) + LONGUEUR_PILLIER_MUR * 2);
+      murGaucheEntier.addChild(glassPane);
+    }
   }
 
   return murGaucheEntier;
@@ -133,6 +143,25 @@ PShape createPillierMur(int longueur) {
   pillierMur.scale(EPAISSEUR, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, longueur);
 
   return pillierMur;
+}
+
+PShape createGlassPane() {
+  PImage[] textures = new PImage[] {
+    noTexture,
+    noTexture,
+    glassPane,
+    glassPane,
+    noTexture,
+    noTexture
+  };
+
+  PShape glassPane = new CubeMagique(textures, defaultColors).build();
+
+  int longueur = (LONGUEUR_PILLIER_MUR * 3 - SALLE_W);
+
+  glassPane.scale(EPAISSEUR_GLASS_PANE, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, longueur);
+
+  return glassPane;
 }
 
 PShape createMurDroit() {
