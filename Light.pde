@@ -4,7 +4,7 @@ PVector[] lightColor;
 PShape light;
 
 void initLights() {
-  int LIGHT_ROOF_Y = -SALLE_H + 100;
+  float LIGHT_ROOF_Y = -SALLE_H + 100;
 
   lightPos = new PVector[] {
     new PVector(SALLE_W/3, LIGHT_ROOF_Y, SALLE_D/2),

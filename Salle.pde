@@ -1,10 +1,11 @@
-final int SALLE_W = 600 / 2;
-final int SALLE_H = 280 / 2;
-final int SALLE_D = 980 / 2;
-final int EPAISSEUR = 10 / 2;
-final int EPAISSEUR_GLASS_PANE = 5 / 2;
-final int LONGUEUR_PILLIER_MUR = SALLE_W / 8;
-final int MUR_GAUCHE_HAUT_H = 20 / 2;
+final float SALLE_W = 600 / 2;
+final float SALLE_H = 280 / 2;
+final float SALLE_D = 980 / 2;
+final float EPAISSEUR = 10 / 2;
+final float EPAISSEUR_GLASS_PANE = 5 / 2;
+final float LONGUEUR_PILLIER_MUR = SALLE_D / 8;
+final float MUR_GAUCHE_HAUT_H = 20 / 2;
+final float LONGUEUR_GLASS_PANE = SALLE_D / 8 * 5 / 2;
 
 final int MUR_UV_TILING = 4;
 
@@ -120,13 +121,8 @@ PShape createMurGauche() {
     murGaucheEntier.addChild(pillier);
 
     if (i > 0) {
-      PShape debug = new CubeMagique(missingTextures, debugColors).build();
-      debug.scale(10, 10, 10);
-      debug.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i] + LONGUEUR_PILLIER_MUR + (SALLE_W - LONGUEUR_PILLIER_MUR * 3));
-      murGaucheEntier.addChild(debug);
-
       PShape glassPane = createGlassPane();
-      glassPane.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i] + LONGUEUR_PILLIER_MUR + (SALLE_W - LONGUEUR_PILLIER_MUR * 3));
+      glassPane.translate(0, (-SALLE_H * 2) + (SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H) + MUR_GAUCHE_HAUT_H * 2, positionsPilliers[i] + LONGUEUR_PILLIER_MUR + LONGUEUR_GLASS_PANE);
       murGaucheEntier.addChild(glassPane);
     }
   }
@@ -171,9 +167,8 @@ PShape createGlassPane() {
 
   PShape glassPane = new CubeMagique(textures, defaultColors).build();
 
-  int longueur = (SALLE_W - LONGUEUR_PILLIER_MUR * 3);
 
-  glassPane.scale(EPAISSEUR_GLASS_PANE, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, longueur);
+  glassPane.scale(EPAISSEUR_GLASS_PANE, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, LONGUEUR_GLASS_PANE);
 
   return glassPane;
 }
