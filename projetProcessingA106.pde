@@ -132,6 +132,7 @@ boolean keyAction(char keyInput, boolean state, boolean value) {
 void keyPressed() {
   cameraKeyPressed();
   keyPressedDebug();
+  keyPressedSalle();
 }
 
 void keyReleased() {

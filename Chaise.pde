@@ -83,7 +83,16 @@ PShape createPiedChaise() {
     metal
   };
 
-  PShape piedChaise = new CubeMagique(textures, defaultColors).withSpecular(255.0, 255.0, 255.0).build(PIED_CHAISE_W, PIED_CHAISE_H, PIED_CHAISE_D);
+  PVector[] colors = new PVector[] {
+    new PVector(255, 186, 10),
+    new PVector(255, 186, 10),
+    new PVector(255, 186, 10),
+    new PVector(255, 186, 10),
+    new PVector(255, 186, 10),
+    new PVector(255, 186, 10),
+  };
+
+  PShape piedChaise = new CubeMagique(textures, colors).withSpecular(255.0, 255.0, 255.0).build(PIED_CHAISE_W, PIED_CHAISE_H, PIED_CHAISE_D);
 
   return piedChaise;
 }

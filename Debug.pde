@@ -20,8 +20,6 @@ PShape createZeroZero(float size) {
 
   PShape debugShape = new CubeMagique(missingTextures, originColors).build(size, size, size);
 
-  debugShape.scale(size);
-
   return debugShape;
 }
 

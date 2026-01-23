@@ -56,6 +56,17 @@ PVector[] cubeVertices = {
   new PVector( c, c, -c)  // 7
 };
 
+PVector[] cubeVerticesCharniere = {
+  new PVector(0, -c, c), // 0
+  new PVector(c * 2, -c, c), // 1
+  new PVector(0, c, c), // 2
+  new PVector(c * 2, c, c), // 3
+  new PVector(0, -c, -c), // 4
+  new PVector(c * 2, -c, -c), // 5
+  new PVector(0, c, -c), // 6
+  new PVector(c * 2, c, -c)  // 7
+};
+
 public class CubeMagique {
   private PImage[] textures;
   private PVector[] colors;
@@ -66,6 +77,7 @@ public class CubeMagique {
   private float shininessValue = 200.0;
   private PVector specular = new PVector(0, 0, 0);
   private PVector emissiveColor = new PVector(0, 0, 0);
+  private PVector[] cubeMagiqueVertices = cubeVertices;
 
   public CubeMagique(PImage[] textures, PVector[] colors) {
     this.textures = textures;
@@ -122,15 +134,20 @@ public class CubeMagique {
     return this;
   }
 
+  public CubeMagique withCharniere() {
+    this.cubeMagiqueVertices = cubeVerticesCharniere;
+    return this;
+  }
+
   public PShape build(float widthShape, float heightShape, float depthShape, float totalSizeWidth, float totalSizeHeight, float totalSizeDepth) {
     PShape cube = createShape(GROUP);
 
-    cube.addChild(this.createCubeMagiqueFace(textures[FRONT], colors[FRONT], cubeVertices[FRONT_TL], cubeVertices[FRONT_TR], cubeVertices[FRONT_BR], cubeVertices[FRONT_BL], widthShape, heightShape, totalSizeWidth, totalSizeHeight));
-    cube.addChild(this.createCubeMagiqueFace(textures[BACK], colors[BACK], cubeVertices[BACK_TR], cubeVertices[BACK_TL], cubeVertices[BACK_BL], cubeVertices[BACK_BR], widthShape, heightShape, totalSizeWidth, totalSizeHeight));
-    cube.addChild(this.createCubeMagiqueFace(textures[RIGHT], colors[RIGHT], cubeVertices[FRONT_TR], cubeVertices[BACK_TR], cubeVertices[BACK_BR], cubeVertices[FRONT_BR], depthShape, heightShape, totalSizeDepth, totalSizeHeight));
-    cube.addChild(this.createCubeMagiqueFace(textures[LEFT], colors[LEFT], cubeVertices[BACK_TL], cubeVertices[FRONT_TL], cubeVertices[FRONT_BL], cubeVertices[BACK_BL], depthShape, heightShape, totalSizeDepth, totalSizeHeight));
-    cube.addChild(this.createCubeMagiqueFace(textures[BOTTOM], colors[BOTTOM], cubeVertices[FRONT_BL], cubeVertices[FRONT_BR], cubeVertices[BACK_BR], cubeVertices[BACK_BL], widthShape, depthShape, totalSizeWidth, totalSizeDepth));
-    cube.addChild(this.createCubeMagiqueFace(textures[TOP], colors[TOP], cubeVertices[BACK_TL], cubeVertices[BACK_TR], cubeVertices[FRONT_TR], cubeVertices[FRONT_TL], widthShape, depthShape, totalSizeWidth, totalSizeDepth));
+    cube.addChild(this.createCubeMagiqueFace(FRONT, FRONT, FRONT_TL, FRONT_TR, FRONT_BR, FRONT_BL, widthShape, heightShape, totalSizeWidth, totalSizeHeight));
+    cube.addChild(this.createCubeMagiqueFace(BACK, BACK, BACK_TR, BACK_TL, BACK_BL, BACK_BR, widthShape, heightShape, totalSizeWidth, totalSizeHeight));
+    cube.addChild(this.createCubeMagiqueFace(RIGHT, RIGHT, FRONT_TR, BACK_TR, BACK_BR, FRONT_BR, depthShape, heightShape, totalSizeDepth, totalSizeHeight));
+    cube.addChild(this.createCubeMagiqueFace(LEFT, LEFT, BACK_TL, FRONT_TL, FRONT_BL, BACK_BL, depthShape, heightShape, totalSizeDepth, totalSizeHeight));
+    cube.addChild(this.createCubeMagiqueFace(BOTTOM, BOTTOM, FRONT_BL, FRONT_BR, BACK_BR, BACK_BL, widthShape, depthShape, totalSizeWidth, totalSizeDepth));
+    cube.addChild(this.createCubeMagiqueFace(TOP, TOP, BACK_TL, BACK_TR, FRONT_TR, FRONT_TL, widthShape, depthShape, totalSizeWidth, totalSizeDepth));
 
     cube.scale(widthShape, heightShape, depthShape);
 
@@ -141,7 +158,14 @@ public class CubeMagique {
     return this.build(widthShape, heightShape, depthShape, widthShape, heightShape, depthShape);
   }
 
-  private PShape createCubeMagiqueFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, float widthShape, float heightShape, float totalSizeWidth, float totalSizeHeight) {
+  private PShape createCubeMagiqueFace(int texIndex, int colorIndex, int v0Index, int v1Index, int v2Index, int v3Index, float widthShape, float heightShape, float totalSizeWidth, float totalSizeHeight) {
+    PImage tex = this.textures[texIndex];
+    PVector colors = this.colors[colorIndex];
+    PVector v0 = this.cubeMagiqueVertices[v0Index];
+    PVector v1 = this.cubeMagiqueVertices[v1Index];
+    PVector v2 = this.cubeMagiqueVertices[v2Index];
+    PVector v3 = this.cubeMagiqueVertices[v3Index];
+
     PShape face = createShape();
     face.beginShape(QUAD);
     face.textureMode(NORMAL);

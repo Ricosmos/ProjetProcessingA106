@@ -9,7 +9,10 @@ final float LONGUEUR_GLASS_PANE = SALLE_D / 8 * 5 / 2;
 
 final int MUR_UV_TILING = 4;
 
+boolean keyOOpen = false;
+
 PShape salle;
+PShape[] portes = new PShape[3];
 PShape murAvant, murArriere, murGauche, murDroit, plafond, sol;
 PImage bottom, wall, roof, glassPane, redBrickWall;
 
@@ -27,8 +30,8 @@ PShape createSalle() {
   plafond.translate(0, -SALLE_H - EPAISSEUR, 0);
   murGauche.translate(-SALLE_W - EPAISSEUR, 0, 0);
   murDroit.translate(SALLE_W + EPAISSEUR, 0, 0);
-  murAvant.translate(0, 0, SALLE_D + EPAISSEUR);
-  murArriere.translate(0, 0, -SALLE_D - EPAISSEUR);
+  murAvant.translate(0, 0, -SALLE_D - EPAISSEUR);
+  murArriere.translate(0, 0, SALLE_D + EPAISSEUR);
 
   salle.addChild(sol);
   salle.addChild(plafond);
@@ -166,6 +169,8 @@ PShape createGlassPane() {
 }
 
 PShape createMurDroit() {
+  PShape murDroitComplet = createShape(GROUP);
+
   PImage[] textures = new PImage[] {
     redBrickWall,
     redBrickWall,
@@ -177,10 +182,20 @@ PShape createMurDroit() {
 
   PShape murDroit = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(EPAISSEUR, SALLE_H, SALLE_D);
 
-  return murDroit;
+  PShape porte = createPorte();
+  porte.rotateY(90 * DEG_TO_RAD);
+  porte.translate(-PORTE_D * 2, 0, -SALLE_D + PORTE_W + 30);
+  portes[0] = porte;
+
+  murDroitComplet.addChild(murDroit);
+  murDroitComplet.addChild(porte);
+
+  return murDroitComplet;
 }
 
-PShape createMurAvant() {
+PShape createMurArriere() {
+  PShape murAvantComplet = createShape(GROUP);
+
   PImage[] textures = new PImage[] {
     redBrickWall,
     wall,
@@ -191,11 +206,20 @@ PShape createMurAvant() {
   };
 
   PShape murAvant = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(SALLE_W, SALLE_H, EPAISSEUR);
+  PShape porte = createPorte();
+  porte.translate(-SALLE_W + 4, 0, -PORTE_D * 2 );
 
-  return murAvant;
+  portes[2] = porte;
+
+  murAvantComplet.addChild(murAvant);
+  murAvantComplet.addChild(porte);
+
+  return murAvantComplet;
 }
 
-PShape createMurArriere() {
+PShape createMurAvant() {
+  PShape murArriereComplet = createShape(GROUP);
+
   PImage[] textures = new PImage[] {
     wall,
     redBrickWall,
@@ -207,5 +231,18 @@ PShape createMurArriere() {
 
   PShape murArriere = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(SALLE_W, SALLE_H, EPAISSEUR);
 
-  return murArriere;
+  PShape porte = createPorte();
+  porte.translate(-SALLE_W + 4, 0, PORTE_D * 2 );
+  portes[1] = porte;
+
+
+  murArriereComplet.addChild(murArriere);
+  murArriereComplet.addChild(porte);
+
+  return murArriereComplet;
+}
+
+void keyPressedSalle() {
+  if (keyAction('O', keyOOpen, !keyOOpen)) {
+  }
 }
