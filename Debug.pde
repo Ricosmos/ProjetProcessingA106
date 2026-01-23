@@ -3,9 +3,7 @@ PShape debugShapeCam, debugZeroZero;
 boolean debugMode = false;
 
 PShape createDebugShapeCam(float size) {
-  PShape debugShape = new CubeMagique(missingTextures, debugColors).build();
-
-  debugShape.scale(size);
+  PShape debugShape = new CubeMagique(missingTextures, debugColors).build(size, size, size);
 
   return debugShape;
 }
@@ -20,7 +18,7 @@ PShape createZeroZero(float size) {
     new PVector(255, 255, 255)  // white
   };
 
-  PShape debugShape = new CubeMagique(missingTextures, originColors).build();
+  PShape debugShape = new CubeMagique(missingTextures, originColors).build(size, size, size);
 
   debugShape.scale(size);
 

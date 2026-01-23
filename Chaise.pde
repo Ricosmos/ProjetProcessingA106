@@ -53,9 +53,7 @@ PShape createAssiseChaise() {
     woodChaise
   };
 
-  PShape assiseChaise = new CubeMagique(textures, defaultColors).build();
-
-  assiseChaise.scale(ASSISE_CHAISE_W, ASSISE_CHAISE_H, ASSISE_CHAISE_D);
+  PShape assiseChaise = new CubeMagique(textures, defaultColors).build(ASSISE_CHAISE_W, ASSISE_CHAISE_H, ASSISE_CHAISE_D);
 
   return assiseChaise;
 }
@@ -70,9 +68,7 @@ PShape createDossierChaise() {
     woodChaise
   };
 
-  PShape dossierChaise = new CubeMagique(textures, defaultColors).invertUVs().build();
-
-  dossierChaise.scale(DOSSIER_CHAISE_W, DOSSIER_CHAISE_H, DOSSIER_CHAISE_D);
+  PShape dossierChaise = new CubeMagique(textures, defaultColors).invertUVs().build(DOSSIER_CHAISE_W, DOSSIER_CHAISE_H, DOSSIER_CHAISE_D);
 
   return dossierChaise;
 }
@@ -87,9 +83,7 @@ PShape createPiedChaise() {
     metal
   };
 
-  PShape piedChaise = new CubeMagique(textures, defaultColors).withSpecular(255.0, 255.0, 255.0).build();
-
-  piedChaise.scale(PIED_CHAISE_W, PIED_CHAISE_H, PIED_CHAISE_D);
+  PShape piedChaise = new CubeMagique(textures, defaultColors).withSpecular(255.0, 255.0, 255.0).build(PIED_CHAISE_W, PIED_CHAISE_H, PIED_CHAISE_D);
 
   return piedChaise;
 }

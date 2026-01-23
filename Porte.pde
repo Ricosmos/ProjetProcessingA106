@@ -15,9 +15,7 @@ PShape createPorte() {
     noTexture
   };
 
-  PShape porte = new CubeMagique(textures, defaultColors).build();
-
-  porte.scale(PORTE_W, PORTE_H, PORTE_D);
+  PShape porte = new CubeMagique(textures, defaultColors).build(PORTE_W, PORTE_H, PORTE_D);
 
   return porte;
 };

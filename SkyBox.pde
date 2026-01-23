@@ -1,5 +1,6 @@
 PShape skybox;
 PImage negx, posx, negy, posy, negz, posz;
+final int SIZE_SKYBOX = 3000;
 
 PShape createSkyBox() {
   PImage[] textures = new PImage[] {
@@ -11,9 +12,7 @@ PShape createSkyBox() {
     posy
   };
 
-  PShape skyBox = new CubeMagique(textures, defaultColors).build();
-
-  skyBox.scale(3000, 3000, 3000);
+  PShape skyBox = new CubeMagique(textures, defaultColors).build(SIZE_SKYBOX, SIZE_SKYBOX, SIZE_SKYBOX);
 
   return skyBox;
 }

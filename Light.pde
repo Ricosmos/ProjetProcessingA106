@@ -50,8 +50,7 @@ void drawLight() {
 }
 
 PShape createLightShape() {
-  PShape light = new CubeMagique(missingTextures, defaultColors).withEmissive(255, 255, 255).build();
-  light.scale(20, 5, 50);
+  PShape light = new CubeMagique(missingTextures, defaultColors).withEmissive(255, 255, 255).build(20, 5, 50);
 
   return light;
 }

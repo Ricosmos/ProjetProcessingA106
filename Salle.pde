@@ -57,8 +57,7 @@ PShape createSol() {
     bottom
   };
 
-  PShape sol = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).withShininess(100).withSpecular(255).build();
-  sol.scale(SALLE_W, EPAISSEUR, SALLE_D);
+  PShape sol = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).withShininess(100).withSpecular(255).build(SALLE_W, EPAISSEUR, SALLE_D);
 
   return sol;
 }
@@ -73,8 +72,7 @@ PShape createPlafond() {
     noTexture
   };
 
-  PShape plafond = new CubeMagique(textures, defaultColors).withUVTiling(2).build();
-  plafond.scale(SALLE_W, EPAISSEUR, SALLE_D);
+  PShape plafond = new CubeMagique(textures, defaultColors).withUVTiling(2).build(SALLE_W, EPAISSEUR, SALLE_D);
 
   return plafond;
 }
@@ -101,11 +99,8 @@ PShape createMurGauche() {
     new PVector(0, 0, 0),
   };
 
-  PShape murGaucheBas = new CubeMagique(textures, colors).withUVTiling(MUR_UV_TILING).build();
-  PShape murGaucheHaut = new CubeMagique(textures, colors).build();
-
-  murGaucheBas.scale(EPAISSEUR, SALLE_H / 3, SALLE_D);
-  murGaucheHaut.scale(EPAISSEUR, MUR_GAUCHE_HAUT_H, SALLE_D);
+  PShape murGaucheBas = new CubeMagique(textures, colors).withUVTiling(MUR_UV_TILING).build(EPAISSEUR, SALLE_H / 3, SALLE_D, EPAISSEUR, SALLE_H, SALLE_D);
+  PShape murGaucheHaut = new CubeMagique(textures, colors).withUVTiling(MUR_UV_TILING).build(EPAISSEUR, MUR_GAUCHE_HAUT_H, SALLE_D, EPAISSEUR, SALLE_H, SALLE_D);
 
   murGaucheBas.translate(0, -SALLE_H / 3, 0);
   murGaucheHaut.translate(0, (-SALLE_H * 2) + MUR_GAUCHE_HAUT_H, 0);
@@ -149,8 +144,7 @@ PShape createPillierMur(float longueur) {
     new PVector(0, 0, 0)
   };
 
-  PShape pillierMur = new CubeMagique(textures, colors).withUVTiling(MUR_UV_TILING).build();
-  pillierMur.scale(EPAISSEUR, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, longueur);
+  PShape pillierMur = new CubeMagique(textures, colors).withUVTiling(MUR_UV_TILING).build(EPAISSEUR, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, longueur, EPAISSEUR, SALLE_H, SALLE_D);
 
   return pillierMur;
 }
@@ -165,10 +159,7 @@ PShape createGlassPane() {
     noTexture
   };
 
-  PShape glassPane = new CubeMagique(textures, defaultColors).build();
-
-
-  glassPane.scale(EPAISSEUR_GLASS_PANE, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, LONGUEUR_GLASS_PANE);
+  PShape glassPane = new CubeMagique(textures, defaultColors).withUVTiling(4).build(EPAISSEUR_GLASS_PANE, SALLE_H - SALLE_H / 3 - MUR_GAUCHE_HAUT_H, LONGUEUR_GLASS_PANE, EPAISSEUR_GLASS_PANE, SALLE_H - SALLE_H / 3, LONGUEUR_GLASS_PANE);
 
   return glassPane;
 }
@@ -183,8 +174,7 @@ PShape createMurDroit() {
     noTexture
   };
 
-  PShape murDroit = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build();
-  murDroit.scale(EPAISSEUR, SALLE_H, SALLE_D);
+  PShape murDroit = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(EPAISSEUR, SALLE_H, SALLE_D);
 
   return murDroit;
 }
@@ -199,8 +189,7 @@ PShape createMurAvant() {
     noTexture
   };
 
-  PShape murAvant = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build();
-  murAvant.scale(SALLE_W, SALLE_H, EPAISSEUR);
+  PShape murAvant = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(SALLE_W, SALLE_H, EPAISSEUR);
 
   return murAvant;
 }
@@ -215,8 +204,7 @@ PShape createMurArriere() {
     noTexture
   };
 
-  PShape murArriere = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build();
-  murArriere.scale(SALLE_W, SALLE_H, EPAISSEUR);
+  PShape murArriere = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(SALLE_W, SALLE_H, EPAISSEUR);
 
   return murArriere;
 }

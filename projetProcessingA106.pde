@@ -86,6 +86,7 @@ void draw() {
 
   resetShader();
   pushMatrix();
+  skybox.rotateY(0.0001);
   shape(skybox);
   popMatrix();
 

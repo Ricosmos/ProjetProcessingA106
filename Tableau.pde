@@ -44,11 +44,8 @@ PShape createCadreTableau() {
     metal
   };
 
-  PShape cadreTableauHaut = new CubeMagique(missingTextures, defaultColors).withUVTiling(4).build();
-  PShape cadreTableauBas = new CubeMagique(missingTextures, defaultColors).withUVTiling(4).build();
-
-  cadreTableauHaut.scale(TABLEAU_W, CADRE_TABLEAU_EPAISSEUR_HAUT, TABLEAU_D + 1);
-  cadreTableauBas.scale(TABLEAU_W, CADRE_TABLEAU_EPAISSEUR_BAS, TABLEAU_D + 1);
+  PShape cadreTableauHaut = new CubeMagique(missingTextures, defaultColors).withUVTiling(4).build(TABLEAU_W, CADRE_TABLEAU_EPAISSEUR_HAUT, TABLEAU_D + 1);
+  PShape cadreTableauBas = new CubeMagique(missingTextures, defaultColors).withUVTiling(4).build(TABLEAU_W, CADRE_TABLEAU_EPAISSEUR_BAS, TABLEAU_D + 1);
 
   cadreTableauHaut.translate(0, - (TABLEAU_H + CADRE_TABLEAU_EPAISSEUR_HAUT), 0);
   cadreTableauBas.translate(0, TABLEAU_H + CADRE_TABLEAU_EPAISSEUR_BAS, 0);
@@ -69,9 +66,7 @@ PShape createTableauVert() {
     noTexture
   };
 
-  PShape tableauVert = new CubeMagique(textures, colorTableau).build();
-
-  tableauVert.scale(TABLEAU_W, TABLEAU_H, TABLEAU_D);
+  PShape tableauVert = new CubeMagique(textures, colorTableau).build(TABLEAU_W, TABLEAU_H, TABLEAU_D);
 
   return tableauVert;
 }

@@ -61,7 +61,7 @@ public class CubeMagique {
   private PVector[] colors;
 
   private boolean invertUVs = false;
-  private int uvMultiplier = 1;
+  private float uvMultiplier = 1;
   private boolean invertNormals = false;
   private float shininessValue = 200.0;
   private PVector specular = new PVector(0, 0, 0);
@@ -72,7 +72,7 @@ public class CubeMagique {
     this.colors = colors;
   }
 
-  public CubeMagique withUVTiling(int multiplier) {
+  public CubeMagique withUVTiling(float multiplier) {
     this.uvMultiplier = multiplier;
     return this;
   }
@@ -122,30 +122,41 @@ public class CubeMagique {
     return this;
   }
 
-  public PShape build() {
-    PVector[] uvsToUse = invertUVs ? cubeUVsInverted : cubeUVs;
-    PVector[] scaledUVs = new PVector[4];
-    for (int i=0; i<4; i++) {
-      scaledUVs[i] = new PVector(uvsToUse[i].x * uvMultiplier, uvsToUse[i].y * uvMultiplier);
-    }
-
+  public PShape build(float widthShape, float heightShape, float depthShape, float totalSizeWidth, float totalSizeHeight, float totalSizeDepth) {
     PShape cube = createShape(GROUP);
 
-    cube.addChild(this.createCubeMagiqueFace(textures[FRONT], colors[FRONT], cubeVertices[FRONT_TL], cubeVertices[FRONT_TR], cubeVertices[FRONT_BR], cubeVertices[FRONT_BL], scaledUVs));
-    cube.addChild(this.createCubeMagiqueFace(textures[BACK], colors[BACK], cubeVertices[BACK_TR], cubeVertices[BACK_TL], cubeVertices[BACK_BL], cubeVertices[BACK_BR], scaledUVs));
-    cube.addChild(this.createCubeMagiqueFace(textures[RIGHT], colors[RIGHT], cubeVertices[FRONT_TR], cubeVertices[BACK_TR], cubeVertices[BACK_BR], cubeVertices[FRONT_BR], scaledUVs));
-    cube.addChild(this.createCubeMagiqueFace(textures[LEFT], colors[LEFT], cubeVertices[BACK_TL], cubeVertices[FRONT_TL], cubeVertices[FRONT_BL], cubeVertices[BACK_BL], scaledUVs));
-    cube.addChild(this.createCubeMagiqueFace(textures[BOTTOM], colors[BOTTOM], cubeVertices[FRONT_BL], cubeVertices[FRONT_BR], cubeVertices[BACK_BR], cubeVertices[BACK_BL], scaledUVs));
-    cube.addChild(this.createCubeMagiqueFace(textures[TOP], colors[TOP], cubeVertices[BACK_TL], cubeVertices[BACK_TR], cubeVertices[FRONT_TR], cubeVertices[FRONT_TL], scaledUVs));
+    cube.addChild(this.createCubeMagiqueFace(textures[FRONT], colors[FRONT], cubeVertices[FRONT_TL], cubeVertices[FRONT_TR], cubeVertices[FRONT_BR], cubeVertices[FRONT_BL], widthShape, heightShape, totalSizeWidth, totalSizeHeight));
+    cube.addChild(this.createCubeMagiqueFace(textures[BACK], colors[BACK], cubeVertices[BACK_TR], cubeVertices[BACK_TL], cubeVertices[BACK_BL], cubeVertices[BACK_BR], widthShape, heightShape, totalSizeWidth, totalSizeHeight));
+    cube.addChild(this.createCubeMagiqueFace(textures[RIGHT], colors[RIGHT], cubeVertices[FRONT_TR], cubeVertices[BACK_TR], cubeVertices[BACK_BR], cubeVertices[FRONT_BR], depthShape, heightShape, totalSizeDepth, totalSizeHeight));
+    cube.addChild(this.createCubeMagiqueFace(textures[LEFT], colors[LEFT], cubeVertices[BACK_TL], cubeVertices[FRONT_TL], cubeVertices[FRONT_BL], cubeVertices[BACK_BL], depthShape, heightShape, totalSizeDepth, totalSizeHeight));
+    cube.addChild(this.createCubeMagiqueFace(textures[BOTTOM], colors[BOTTOM], cubeVertices[FRONT_BL], cubeVertices[FRONT_BR], cubeVertices[BACK_BR], cubeVertices[BACK_BL], widthShape, depthShape, totalSizeWidth, totalSizeDepth));
+    cube.addChild(this.createCubeMagiqueFace(textures[TOP], colors[TOP], cubeVertices[BACK_TL], cubeVertices[BACK_TR], cubeVertices[FRONT_TR], cubeVertices[FRONT_TL], widthShape, depthShape, totalSizeWidth, totalSizeDepth));
+
+    cube.scale(widthShape, heightShape, depthShape);
 
     return cube;
   }
 
-  private PShape createCubeMagiqueFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, PVector[] uvs) {
+  public PShape build(float widthShape, float heightShape, float depthShape) {
+    return this.build(widthShape, heightShape, depthShape, widthShape, heightShape, depthShape);
+  }
+
+  private PShape createCubeMagiqueFace(PImage tex, PVector colors, PVector v0, PVector v1, PVector v2, PVector v3, float widthShape, float heightShape, float totalSizeWidth, float totalSizeHeight) {
     PShape face = createShape();
     face.beginShape(QUAD);
     face.textureMode(NORMAL);
     face.texture(tex);
+
+    // 1. Calcul de la répétition basée sur la taille de l'image (Densité)
+    float uMax = (widthShape / totalSizeWidth) * uvMultiplier;
+    float vMax = (heightShape / totalSizeHeight) * uvMultiplier;
+
+    // 2. Gestion de l'inversion
+    // Si invertUVs est vrai, on commence à uMax/vMax et on va vers 0
+    float uStart = invertUVs ? uMax : 0;
+    float uEnd   = invertUVs ? 0    : uMax;
+    float vStart = 0; // Tu peux aussi ajouter une logique d'inversion verticale ici
+    float vEnd   = vMax;
 
     face.shininess(this.shininessValue);
     face.emissive(this.emissiveColor.x, this.emissiveColor.y, this.emissiveColor.z);
@@ -162,13 +173,13 @@ public class CubeMagique {
     }
 
     face.normal(normal.x, normal.y, normal.z);
-    face.vertex(v0.x, v0.y, v0.z, uvs[0].x, uvs[0].y);
+    face.vertex(v0.x, v0.y, v0.z, uStart, vStart);
     face.normal(normal.x, normal.y, normal.z);
-    face.vertex(v1.x, v1.y, v1.z, uvs[1].x, uvs[1].y);
+    face.vertex(v1.x, v1.y, v1.z, uEnd, vStart);
     face.normal(normal.x, normal.y, normal.z);
-    face.vertex(v2.x, v2.y, v2.z, uvs[2].x, uvs[2].y);
+    face.vertex(v2.x, v2.y, v2.z, uEnd, vEnd);
     face.normal(normal.x, normal.y, normal.z);
-    face.vertex(v3.x, v3.y, v3.z, uvs[3].x, uvs[3].y);
+    face.vertex(v3.x, v3.y, v3.z, uStart, vEnd);
     face.endShape(CLOSE);
 
     return face;

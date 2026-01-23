@@ -68,23 +68,16 @@ PShape createEcranSpeechi() {
 
   PShape ecranSpeechi = createShape(GROUP);
 
-  PShape ecran = new CubeMagique(textures, colorEcran).build();
-  PShape bordureEcranTop = new CubeMagique(missingTextures, colorEcranSpeechi).build();
-  PShape bordureEcranBottom = new CubeMagique(missingTextures, colorEcranSpeechi).build();
-  PShape bordureEcranLeft = new CubeMagique(missingTextures, colorEcranSpeechi).build();
-  PShape bordureEcranRight = new CubeMagique(missingTextures, colorEcranSpeechi).build();
+  PShape ecran = new CubeMagique(textures, colorEcran).build(ECRAN_W - 1, ECRAN_H - 1, ECRAN_D);
+  PShape bordureEcranTop = new CubeMagique(missingTextures, colorEcranSpeechi).build(ECRAN_W, 1, ECRAN_D);
+  PShape bordureEcranBottom = new CubeMagique(missingTextures, colorEcranSpeechi).build(ECRAN_W, 1, ECRAN_D);
+  PShape bordureEcranLeft = new CubeMagique(missingTextures, colorEcranSpeechi).build(1, ECRAN_H, ECRAN_D);
+  PShape bordureEcranRight = new CubeMagique(missingTextures, colorEcranSpeechi).build(1, ECRAN_H, ECRAN_D);
 
   bordureEcranTop.translate(0, -(ECRAN_H), 0);
   bordureEcranBottom.translate(0, ECRAN_H, 0);
   bordureEcranLeft.translate(- (ECRAN_W), 0, 0);
   bordureEcranRight.translate(ECRAN_W, 0, 0);
-
-  bordureEcranTop.scale(ECRAN_W, 1, ECRAN_D);
-  bordureEcranBottom.scale(ECRAN_W, 1, ECRAN_D);
-  bordureEcranLeft.scale(1, ECRAN_H, ECRAN_D);
-  bordureEcranRight.scale(1, ECRAN_H, ECRAN_D);
-
-  ecran.scale(ECRAN_W - 1, ECRAN_H - 1, ECRAN_D);
 
   ecranSpeechi.addChild(ecran);
   ecranSpeechi.addChild(bordureEcranTop);
@@ -96,9 +89,7 @@ PShape createEcranSpeechi() {
 }
 
 PShape createPiedEcran() {
-  PShape piedEcran = new CubeMagique(missingTextures, colorEcranSpeechi).build();
-
-  piedEcran.scale(PIED_ECRAN_W, PIED_ECRAN_H, PIED_ECRAN_D);
+  PShape piedEcran = new CubeMagique(missingTextures, colorEcranSpeechi).build(PIED_ECRAN_W, PIED_ECRAN_H, PIED_ECRAN_D);
 
   return piedEcran;
 }
@@ -106,13 +97,9 @@ PShape createPiedEcran() {
 PShape createSupportPiedEcran() {
   PShape supportPiedEcran = createShape(GROUP);
 
-  PShape supportPiedEcranCentral = new CubeMagique(missingTextures, colorEcranSpeechi).build();
-  PShape supportPiedEcranLateralLeft = new CubeMagique(missingTextures, colorEcranSpeechi).build();
-  PShape supportPiedEcranLateralRight = new CubeMagique(missingTextures, colorEcranSpeechi).build();
-
-  supportPiedEcranCentral.scale(SUPPORT_PIED_ECRAN_W, SUPPORT_PIED_ECRAN_H, SUPPORT_PIED_ECRAN_D);
-  supportPiedEcranLateralLeft.scale(SUPPORT_PIED_ECRAN_LATERAL_W, SUPPORT_PIED_ECRAN_LATERAL_H, SUPPORT_PIED_ECRAN_LATERAL_D);
-  supportPiedEcranLateralRight.scale(SUPPORT_PIED_ECRAN_LATERAL_W, SUPPORT_PIED_ECRAN_LATERAL_H, SUPPORT_PIED_ECRAN_LATERAL_D);
+  PShape supportPiedEcranCentral = new CubeMagique(missingTextures, colorEcranSpeechi).build(SUPPORT_PIED_ECRAN_W, SUPPORT_PIED_ECRAN_H, SUPPORT_PIED_ECRAN_D);
+  PShape supportPiedEcranLateralLeft = new CubeMagique(missingTextures, colorEcranSpeechi).build(SUPPORT_PIED_ECRAN_LATERAL_W, SUPPORT_PIED_ECRAN_LATERAL_H, SUPPORT_PIED_ECRAN_LATERAL_D);
+  PShape supportPiedEcranLateralRight = new CubeMagique(missingTextures, colorEcranSpeechi).build(SUPPORT_PIED_ECRAN_LATERAL_W, SUPPORT_PIED_ECRAN_LATERAL_H, SUPPORT_PIED_ECRAN_LATERAL_D);
 
   supportPiedEcranCentral.translate(0, 0, -SUPPORT_PIED_ECRAN_LATERAL_D / 3);
   supportPiedEcranLateralLeft.translate(- (SUPPORT_PIED_ECRAN_W + SUPPORT_PIED_ECRAN_LATERAL_W), 0, 0);
