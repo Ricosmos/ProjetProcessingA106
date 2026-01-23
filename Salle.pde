@@ -11,7 +11,7 @@ final int MUR_UV_TILING = 4;
 
 PShape salle;
 PShape murAvant, murArriere, murGauche, murDroit, plafond, sol;
-PImage bottom, wall, roof, glassPane;
+PImage bottom, wall, roof, glassPane, redBrickWall;
 
 PShape createSalle() {
   PShape salle = createShape(GROUP);
@@ -45,15 +45,16 @@ void loadSalleImages() {
   wall = loadImage("asset/salle/wall.jpg");
   roof = loadImage("asset/salle/demountable-ceiling-tile-stack-2440-mm.jpg");
   glassPane = loadImage("asset/salle/glass_pane.png");
+  redBrickWall = loadImage("asset/salle/red_brick_wall.jpg");
 }
 
 PShape createSol() {
   PImage[] textures = new PImage[] {
-    noTexture,
-    noTexture,
-    noTexture,
-    noTexture,
-    noTexture,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
     bottom
   };
 
@@ -64,12 +65,12 @@ PShape createSol() {
 
 PShape createPlafond() {
   PImage[] textures = new PImage[] {
-    noTexture,
-    noTexture,
-    noTexture,
-    noTexture,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
     roof,
-    noTexture
+    redBrickWall
   };
 
   PShape plafond = new CubeMagique(textures, defaultColors).withUVTiling(2).build(SALLE_W, EPAISSEUR, SALLE_D);
@@ -82,10 +83,10 @@ PShape createMurGauche() {
   murGaucheEntier.translate(0, SALLE_H, 0);
 
   PImage[] textures = new PImage[] {
-    noTexture,
-    noTexture,
+    redBrickWall,
+    redBrickWall,
     wall,
-    noTexture,
+    redBrickWall,
     noTexture,
     noTexture
   };
@@ -130,7 +131,7 @@ PShape createPillierMur(float longueur) {
     noTexture,
     noTexture,
     wall,
-    noTexture,
+    redBrickWall,
     noTexture,
     noTexture
   };
@@ -166,12 +167,12 @@ PShape createGlassPane() {
 
 PShape createMurDroit() {
   PImage[] textures = new PImage[] {
-    noTexture,
-    noTexture,
-    noTexture,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
     wall,
-    noTexture,
-    noTexture
+    redBrickWall,
+    redBrickWall
   };
 
   PShape murDroit = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(EPAISSEUR, SALLE_H, SALLE_D);
@@ -181,12 +182,12 @@ PShape createMurDroit() {
 
 PShape createMurAvant() {
   PImage[] textures = new PImage[] {
-    noTexture,
+    redBrickWall,
     wall,
-    noTexture,
-    noTexture,
-    noTexture,
-    noTexture
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall
   };
 
   PShape murAvant = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(SALLE_W, SALLE_H, EPAISSEUR);
@@ -197,11 +198,11 @@ PShape createMurAvant() {
 PShape createMurArriere() {
   PImage[] textures = new PImage[] {
     wall,
-    noTexture,
-    noTexture,
-    noTexture,
-    noTexture,
-    noTexture
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall,
+    redBrickWall
   };
 
   PShape murArriere = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(SALLE_W, SALLE_H, EPAISSEUR);
