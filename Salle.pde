@@ -183,8 +183,8 @@ PShape createMurDroit() {
   PShape murDroit = new CubeMagique(textures, defaultColors).withUVTiling(MUR_UV_TILING).build(EPAISSEUR, SALLE_H, SALLE_D);
 
   PShape porte = createPorte();
-  porte.rotateY(90 * DEG_TO_RAD);
-  porte.translate(-PORTE_D * 2, 0, -SALLE_D + PORTE_W + 30);
+  porte.rotateY(-90 * DEG_TO_RAD);
+  porte.translate(-PORTE_D * 2, 0, -SALLE_D + 30);
   portes[0] = porte;
 
   murDroitComplet.addChild(murDroit);
