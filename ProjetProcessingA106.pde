@@ -1,7 +1,7 @@
 float angle = 0f;
 float s = 500 / 2.0;
 PShader colorShader;
-PImage noTexture, metal;
+PImage noTexture, metal, vide;
 
 PVector[] defaultColors = new PVector[] {
   new PVector(255, 255, 255),
@@ -62,6 +62,7 @@ void loadImages() {
   loadTableauImages();
   noTexture = loadImage("asset/default.jpg");
   metal = loadImage("asset/silver-metallic.jpg");
+  vide = loadImage("asset/vide.png");
 }
 
 void initTexturesArrays() {
@@ -143,7 +144,7 @@ void keyReleased() {
 void drawRangees(float startX, float startZ, int count) {
   for (int i = 0; i < count; i++) {
     pushMatrix();
-    translate(startX - PLANCHE_W - i * (PLANCHE_W * 2), 0, startZ);
+    translate(startX - PLANCHE_W - i * (PLANCHE_W * 2) - 0.1 *( i + 1), 0, startZ);
     shape(table);
     shape(chaise);
     popMatrix();

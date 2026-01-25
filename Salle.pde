@@ -7,7 +7,7 @@ final float LONGUEUR_PILLIER_MUR = SALLE_D / 8;
 final float MUR_GAUCHE_HAUT_H = 20 / 2;
 final float LONGUEUR_GLASS_PANE = SALLE_D / 8 * 5 / 2;
 
-final int MUR_UV_TILING = 4;
+final int MUR_UV_TILING = 6;
 
 boolean keyOOpen = false;
 
@@ -35,10 +35,10 @@ PShape createSalle() {
 
   salle.addChild(sol);
   salle.addChild(plafond);
-  salle.addChild(murGauche);
   salle.addChild(murDroit);
   salle.addChild(murAvant);
   salle.addChild(murArriere);
+  salle.addChild(murGauche);
 
   return salle;
 }
