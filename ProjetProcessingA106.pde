@@ -44,7 +44,8 @@ void setup() {
 void initShapes() {
   skybox = createSkyBox();
   salle = createSalle();
-  table = createTable();
+  tableOpen = createTable(true);
+  tableClosed = createTable(false);
   chaise = createChaise();
   ecranSpeechi = createEcran();
   debugShapeCam = createDebugShapeCam(10);
@@ -145,7 +146,7 @@ void drawRangees(float startX, float startZ, int count) {
   for (int i = 0; i < count; i++) {
     pushMatrix();
     translate(startX - PLANCHE_W - i * (PLANCHE_W * 2) - 0.1 *( i + 1), 0, startZ);
-    shape(table);
+    shape(tableClosed);
     shape(chaise);
     popMatrix();
   }
