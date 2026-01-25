@@ -25,6 +25,7 @@ PImage[] missingTextures;
 
 void setup() {
   size(800, 800, P3D);
+  surface.setResizable(true);
   camX = SALLE_W;
   camY = -SALLE_H;
   camZ = SALLE_D;
