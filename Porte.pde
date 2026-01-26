@@ -7,8 +7,8 @@ PImage porteTexture;
 
 PShape createPorte() {
   PImage[] textures = new PImage[] {
-    noTexture,
-    noTexture,
+    porteTexture,
+    porteTexture,
     noTexture,
     noTexture,
     noTexture,
@@ -23,5 +23,5 @@ PShape createPorte() {
 };
 
 void loadPorteTextures() {
-  porteTexture = loadImage("textures/porte_diffuse.jpg");
+  porteTexture = loadImage("asset/salle/porte.jpg");
 }

@@ -63,6 +63,7 @@ void loadImages() {
   loadChaiseImages();
   loadTexturesecranSpeechi();
   loadTableauImages();
+  loadPorteTextures();
   noTexture = loadImage("asset/default.jpg");
   metal = loadImage("asset/silver-metallic.jpg");
   vide = loadImage("asset/vide.png");
