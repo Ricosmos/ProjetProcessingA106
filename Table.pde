@@ -2,9 +2,7 @@ final int PLANCHE_W = 80 / 2;
 final int PLANCHE_H = 2 / 2;
 final int PLANCHE_D = PLANCHE_W;
 
-final int PLANCHE_TROU_W = PLANCHE_W - 8;
-final int PLANCHE_TROU_H = PLANCHE_H;
-final int PLANCHE_TROU_D = 25 / 2;
+final int TARGET_SUPPORT_HEIGHT_OPEN = 40;
 
 final int SUPPORT_W = 80 / 2;
 final int SUPPORT_H = 73 / 2;
@@ -14,8 +12,22 @@ final int PIED_TABLE_W = 10 / 2;
 final int PIED_TABLE_H = 5 / 2;
 final int PIED_TABLE_D = 70 / 2;
 
+// SUPPORT MONITEUR
+
+final int PLANCHE_TROU_W = PLANCHE_W - 8;
+final int PLANCHE_TROU_H = PLANCHE_H;
+final int PLANCHE_TROU_D = 25 / 2;
+
+final int PILLIER_SUPPORT_W = 8 / 2;
+final int PILLIER_SUPPORT_H = SUPPORT_H;
+final int PILLIER_SUPPORT_D = 4 / 2;
+
 PImage wood, woodTopClosed, woodTopOpen, woodTopOpenInvert, woodTopMoniteur, bureau, bureauSide;
-PShape tableOpen, tableClosed, supportMoniteur;
+PShape tableOpen, tableClosed, supportMoniteurDynamique;
+
+boolean isTableOpen = false;
+boolean isTableMoving = false;
+float supportCurrentHeight = 0;
 
 PShape createTable(boolean isOpen) {
   PShape table = createShape(GROUP);
@@ -25,6 +37,7 @@ PShape createTable(boolean isOpen) {
   PShape piedLeft = createPiedTable();
   PShape piedRight = createPiedTable();
   PShape supportMoniteur = createSupportMoniteur();
+  supportMoniteur.setName("SupportMoniteur");
 
   planche.translate(0, -PLANCHE_H, 0);
   support.translate(0, SUPPORT_H, -PLANCHE_W + 22);
@@ -33,13 +46,14 @@ PShape createTable(boolean isOpen) {
 
   supportMoniteur.translate(0, 0, -PLANCHE_W + 22);
 
+  if (isOpen) {
+    table.addChild(supportMoniteur);
+    supportMoniteurDynamique = table.getChild("SupportMoniteur");
+  }
   table.addChild(support);
   table.addChild(piedLeft);
   table.addChild(piedRight);
   table.addChild(planche);
-  if (isOpen) {
-    table.addChild(supportMoniteur);
-  }
 
   // descend le centre de la table au niveau du sol
   table.translate(0, -(SUPPORT_H + PIED_TABLE_H) * 2, 0);
@@ -56,7 +70,7 @@ PShape createPlancheTable(boolean isOpen) {
       wood,
       wood,
       woodTopOpenInvert,
-      woodTopOpenInvert
+      woodTopOpen
     };
   } else {
     textures = new PImage[] {
@@ -116,10 +130,10 @@ PShape createPiedTable() {
 
 PShape createSupportMoniteur() {
   PImage[] textures = new PImage[] {
-    vide,
-    vide,
-    vide,
-    vide,
+    wood,
+    wood,
+    wood,
+    wood,
     woodTopMoniteur,
     woodTopMoniteur
   };
@@ -137,10 +151,16 @@ PShape createSupportMoniteur() {
   PShape supportMoniteur = createShape(GROUP);
 
   PShape supportDessus = new CubeMagique(textures, defaultColors).build(PLANCHE_TROU_W, PLANCHE_TROU_H, PLANCHE_TROU_D);
+  PShape supportPillier = new CubeMagique(missingTextures, supportColors).build(PILLIER_SUPPORT_W, PILLIER_SUPPORT_H, PILLIER_SUPPORT_D);
+  PShape supportBase = new CubeMagique(missingTextures, supportColors).build(PLANCHE_TROU_W, PLANCHE_TROU_H, PLANCHE_TROU_D);
 
   supportDessus.translate(0, -PLANCHE_TROU_H, 0);
+  supportPillier.translate(0, PILLIER_SUPPORT_H, 0);
+  supportBase.translate(0, PILLIER_SUPPORT_H * 2 + PLANCHE_TROU_H, 0);
 
   supportMoniteur.addChild(supportDessus);
+  supportMoniteur.addChild(supportPillier);
+  supportMoniteur.addChild(supportBase);
 
   return supportMoniteur;
 }
@@ -153,4 +173,30 @@ void loadTableImages() {
   woodTopOpen = loadImage("asset/table/woodTableTop.png");
   woodTopOpenInvert = loadImage("asset/table/woodTableTopInvert.png");
   woodTopMoniteur = loadImage("asset/table/woodTableTopEcran.png");
+}
+
+void animateTable() {
+  if (!isTableMoving)
+    return;
+
+  // print("Animating table support. Current height: " + supportCurrentHeight + ", target height: " + (isTableOpen ? -TARGET_SUPPORT_HEIGHT_OPEN : 0));
+  int targetHeight = isTableOpen ? -TARGET_SUPPORT_HEIGHT_OPEN : 0;
+  float speed = isTableOpen ? -0.5 : 0.5;
+  supportCurrentHeight += speed;
+
+  if ((speed > 0 && supportCurrentHeight > targetHeight) ||
+    (speed < 0 && supportCurrentHeight < targetHeight)) {
+    supportCurrentHeight = targetHeight;
+    isTableMoving = false;
+    return;
+  }
+
+  supportMoniteurDynamique.translate(0, speed, 0);
+}
+
+void keyPressedTable() {
+  if (key == 't' || key == 'T') {
+    isTableOpen = !isTableOpen;
+    isTableMoving = true;
+  }
 }

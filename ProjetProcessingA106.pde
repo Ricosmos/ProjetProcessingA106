@@ -36,16 +36,18 @@ void setup() {
   colorShader = loadShader("Lambert1DiffuseFrag.glsl", "Lambert1DiffuseVert.glsl");
   initShapes();
 
-  print("Press 'i' to toggle debug info.\n");
-  print("Use Z Q S D keys to move the camera forward, left, backward, right.\n");
-  print("Move the mouse to look around.\n");
+
+  print("Utilisez les touches Z Q S D pour deplacer la camera vers l'avant, a gauche, vers l'arrière, a droite.\n");
+  print("Deplacez la souris pour regarder autour.\n\n");
+  print("Appuyez sur 't' pour ouvrir/fermer les bureaux");
+  print("Appuyez sur 'i' pour afficher les informations de debogage.\n");
 }
 
 void initShapes() {
   skybox = createSkyBox();
   salle = createSalle();
-  tableOpen = createTable(true);
   tableClosed = createTable(false);
+  tableOpen = createTable(true);
   chaise = createChaise();
   ecranSpeechi = createEcran();
   debugShapeCam = createDebugShapeCam(10);
@@ -94,6 +96,7 @@ void draw() {
   popMatrix();
 
   shader(colorShader);
+  animateTable();
   drawShape();
   drawDebug();
 }
@@ -105,7 +108,7 @@ void drawShape() {
   translate(SALLE_W, -SALLE_H, SALLE_D);
   drawLight();
 
-  shape(salle);
+  pushMatrix();
   translate(0, SALLE_H, -SALLE_D);
 
   shape(tableau);
@@ -123,6 +126,9 @@ void drawShape() {
   popMatrix();
 
   popMatrix();
+  shape(salle);
+
+  popMatrix();
 }
 
 boolean keyAction(char keyInput, boolean state, boolean value) {
@@ -136,6 +142,7 @@ void keyPressed() {
   cameraKeyPressed();
   keyPressedDebug();
   keyPressedSalle();
+  keyPressedTable();
 }
 
 void keyReleased() {
@@ -146,7 +153,11 @@ void drawRangees(float startX, float startZ, int count) {
   for (int i = 0; i < count; i++) {
     pushMatrix();
     translate(startX - PLANCHE_W - i * (PLANCHE_W * 2) - 0.1 *( i + 1), 0, startZ);
-    shape(tableClosed);
+    if (supportCurrentHeight < 0) {
+      shape(tableOpen);
+    } else {
+      shape(tableClosed);
+    }
     shape(chaise);
     popMatrix();
   }
