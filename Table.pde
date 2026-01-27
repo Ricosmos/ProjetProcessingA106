@@ -22,12 +22,10 @@ final int PILLIER_SUPPORT_W = 8 / 2;
 final int PILLIER_SUPPORT_H = SUPPORT_H;
 final int PILLIER_SUPPORT_D = 4 / 2;
 
+ArrayList<Table> tables = new ArrayList<Table>();
+
 PImage wood, woodTopClosed, woodTopOpen, woodTopOpenInvert, woodTopMoniteur, bureau, bureauSide;
 PShape tableOpen, tableClosed, supportMoniteurDynamique;
-
-boolean isTableOpen = false;
-boolean isTableMoving = false;
-float supportCurrentHeight = 0;
 
 PShape createTable(boolean isOpen) {
   PShape table = createShape(GROUP);
@@ -156,7 +154,7 @@ PShape createSupportMoniteur() {
 
   supportDessus.translate(0, -PLANCHE_TROU_H, 0);
   supportPillier.translate(0, PILLIER_SUPPORT_H, 0);
-  supportBase.translate(0, PILLIER_SUPPORT_H * 2 + PLANCHE_TROU_H, 0);
+  supportBase.translate(0, PILLIER_SUPPORT_H * 2, 0);
 
   supportMoniteur.addChild(supportDessus);
   supportMoniteur.addChild(supportPillier);
@@ -175,28 +173,66 @@ void loadTableImages() {
   woodTopMoniteur = loadImage("asset/table/woodTableTopEcran.png");
 }
 
-void animateTable() {
-  if (!isTableMoving)
-    return;
-
-  // print("Animating table support. Current height: " + supportCurrentHeight + ", target height: " + (isTableOpen ? -TARGET_SUPPORT_HEIGHT_OPEN : 0));
-  int targetHeight = isTableOpen ? -TARGET_SUPPORT_HEIGHT_OPEN : 0;
-  float speed = isTableOpen ? -0.5 : 0.5;
-  supportCurrentHeight += speed;
-
-  if ((speed > 0 && supportCurrentHeight > targetHeight) ||
-    (speed < 0 && supportCurrentHeight < targetHeight)) {
-    supportCurrentHeight = targetHeight;
-    isTableMoving = false;
-    return;
-  }
-
-  supportMoniteurDynamique.translate(0, speed, 0);
-}
 
 void keyPressedTable() {
   if (key == 't' || key == 'T') {
+    for (Table table : tables)
+      table.toggleTable();
+  }
+}
+
+void animateTable() {
+  for (Table table : tables)
+    table.animateTable();
+}
+
+class Table {
+  boolean isTableOpen;
+  boolean isTableMoving;
+  float supportCurrentHeight;
+
+  float deltaX, deltaZ;
+
+  Table(float deltaX, float deltaZ, boolean isOpen) {
+    this.deltaX = deltaX;
+    this.deltaZ = deltaZ;
+    this.isTableOpen = isOpen;
+    this.isTableMoving = false;
+    this.supportCurrentHeight = isOpen ? -TARGET_SUPPORT_HEIGHT_OPEN : 0;
+  }
+
+  void animateTable() {
+    if (!isTableMoving)
+      return;
+
+    int targetHeight = isTableOpen ? -TARGET_SUPPORT_HEIGHT_OPEN : 0;
+    float speed = isTableOpen ? -0.2 : 0.2;
+    supportCurrentHeight += speed;
+
+    if ((speed > 0 && supportCurrentHeight > targetHeight) ||
+      (speed < 0 && supportCurrentHeight < targetHeight)) {
+      supportCurrentHeight = targetHeight;
+      isTableMoving = false;
+      return;
+    }
+  }
+
+  void toggleTable() {
     isTableOpen = !isTableOpen;
     isTableMoving = true;
+  }
+
+  void drawTable() {
+    supportMoniteurDynamique.resetMatrix();
+    supportMoniteurDynamique.translate(0, supportCurrentHeight, -PLANCHE_W + 22);
+    shape(isTableOpen || isTableMoving ? tableOpen : tableClosed);
+  }
+
+  void randomChange() {
+    if (isTableMoving)
+      return;
+
+    if (random(10000) < 3)
+      toggleTable();
   }
 }

@@ -36,10 +36,16 @@ void setup() {
   colorShader = loadShader("Lambert1DiffuseFrag.glsl", "Lambert1DiffuseVert.glsl");
   initShapes();
 
+  setupRangees(SALLE_W, 200, 4);
+  setupRangees(SALLE_W, 350, 6);
+  setupRangees(SALLE_W, 500, 6);
+  setupRangees(SALLE_W, 650, 5);
+  setupRangees(SALLE_W, 800, 3);
+
 
   print("Utilisez les touches Z Q S D pour deplacer la camera vers l'avant, a gauche, vers l'arrière, a droite.\n");
   print("Deplacez la souris pour regarder autour.\n\n");
-  print("Appuyez sur 't' pour ouvrir/fermer les bureaux");
+  print("Appuyez sur 't' pour ouvrir/fermer les bureaux\n");
   print("Appuyez sur 'i' pour afficher les informations de debogage.\n");
 }
 
@@ -113,12 +119,7 @@ void drawShape() {
   translate(0, SALLE_H, -SALLE_D);
 
   shape(tableau);
-
-  drawRangees(SALLE_W, 200, 4);
-  drawRangees(SALLE_W, 350, 6);
-  drawRangees(SALLE_W, 500, 6);
-  drawRangees(SALLE_W, 650, 5);
-  drawRangees(SALLE_W, 800, 3);
+  drawRangees();
 
   pushMatrix();
   translate(-SALLE_W / 4.0 * 2.5, 0, 110);
@@ -150,15 +151,23 @@ void keyReleased() {
   cameraKeyReleased();
 }
 
-void drawRangees(float startX, float startZ, int count) {
+void setupRangees(float startX, float startZ, int count) {
   for (int i = 0; i < count; i++) {
+    boolean isOpen = random(10) > 6;
+    tables.add(new Table(
+      startX - PLANCHE_W - i * (PLANCHE_W * 2) - 0.1 * (i + 1),
+      startZ,
+      isOpen));
+  }
+}
+
+void drawRangees() {
+  for (Table table : tables) {
+    table.randomChange();
+
     pushMatrix();
-    translate(startX - PLANCHE_W - i * (PLANCHE_W * 2) - 0.1 *( i + 1), 0, startZ);
-    if (supportCurrentHeight < 0) {
-      shape(tableOpen);
-    } else {
-      shape(tableClosed);
-    }
+    translate(table.deltaX, 0, table.deltaZ);
+    table.drawTable();
     shape(chaise);
     popMatrix();
   }
