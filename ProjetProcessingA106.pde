@@ -43,9 +43,9 @@ void setup() {
   setupRangees(SALLE_W, 800, 3);
 
 
-  print("Utilisez les touches Z Q S D pour deplacer la camera vers l'avant, a gauche, vers l'arrière, a droite.\n");
+  print("Utilisez les touches Z Q S D pour deplacer la camera vers l'avant, a gauche, vers l'arriere, a droite.\n");
   print("Deplacez la souris pour regarder autour.\n\n");
-  print("Appuyez sur 't' pour ouvrir/fermer les bureaux\n");
+  print("Appuyez sur 't' pour inverser l'ouverture des bureaux\n");
   print("Appuyez sur 'i' pour afficher les informations de debogage.\n");
 }
 
@@ -70,6 +70,7 @@ void loadImages() {
   loadTexturesecranSpeechi();
   loadTableauImages();
   loadPorteTextures();
+  loadImagesMoniteur();
   noTexture = loadImage("asset/default.jpg");
   metal = loadImage("asset/silver-metallic.jpg");
   vide = loadImage("asset/vide.png");
@@ -88,6 +89,11 @@ void initTexturesArrays() {
 
 void draw() {
   background(0, 0, 150);
+
+  float fov = PI/3;
+  float cameraZ = (height/2.0) / tan(fov/2.0);
+  perspective(fov, float(width)/float(height), cameraZ/20.0, cameraZ*10.0);
+
 
   movePositionCamera();
   moveCenterCamera();

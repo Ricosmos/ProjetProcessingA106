@@ -16,7 +16,7 @@ final int SUPPORT_PIED_ECRAN_LATERAL_D = 100 / 2;
 
 
 PShape ecranSpeechi;
-PImage screenTexture;
+PImage speechiTexture;
 
 PVector[] colorEcranSpeechi = new PVector[] {
   new PVector(50, 50, 50),
@@ -30,7 +30,7 @@ PVector[] colorEcranSpeechi = new PVector[] {
 PShape createEcran() {
   PShape ecranSpeechi = createShape(GROUP);
 
-  PShape ecran = createEcranSpeechi();
+  PShape ecran = createMoniteur(ECRAN_W, ECRAN_H, ECRAN_D, speechiTexture, 0);
   PShape pied = createPiedEcran();
   PShape supportPied = createSupportPiedEcran();
 
@@ -43,47 +43,6 @@ PShape createEcran() {
   ecranSpeechi.addChild(supportPied);
 
   ecranSpeechi.translate(0, -(PIED_ECRAN_H * 2 + SUPPORT_PIED_ECRAN_H * 2), 0);
-
-  return ecranSpeechi;
-}
-
-PShape createEcranSpeechi() {
-  PImage[] textures = new PImage[] {
-    screenTexture,
-    noTexture,
-    noTexture,
-    noTexture,
-    noTexture,
-    noTexture
-  };
-
-  PVector[] colorEcran = new PVector[] {
-    new PVector(255, 255, 255),
-    new PVector(50, 50, 50),
-    new PVector(50, 50, 50),
-    new PVector(50, 50, 50),
-    new PVector(50, 50, 50),
-    new PVector(50, 50, 50)
-  };
-
-  PShape ecranSpeechi = createShape(GROUP);
-
-  PShape ecran = new CubeMagique(textures, colorEcran).build(ECRAN_W - 1, ECRAN_H - 1, ECRAN_D);
-  PShape bordureEcranTop = new CubeMagique(missingTextures, colorEcranSpeechi).build(ECRAN_W, 1, ECRAN_D);
-  PShape bordureEcranBottom = new CubeMagique(missingTextures, colorEcranSpeechi).build(ECRAN_W, 1, ECRAN_D);
-  PShape bordureEcranLeft = new CubeMagique(missingTextures, colorEcranSpeechi).build(1, ECRAN_H, ECRAN_D);
-  PShape bordureEcranRight = new CubeMagique(missingTextures, colorEcranSpeechi).build(1, ECRAN_H, ECRAN_D);
-
-  bordureEcranTop.translate(0, -(ECRAN_H), 0);
-  bordureEcranBottom.translate(0, ECRAN_H, 0);
-  bordureEcranLeft.translate(- (ECRAN_W), 0, 0);
-  bordureEcranRight.translate(ECRAN_W, 0, 0);
-
-  ecranSpeechi.addChild(ecran);
-  ecranSpeechi.addChild(bordureEcranTop);
-  ecranSpeechi.addChild(bordureEcranBottom);
-  ecranSpeechi.addChild(bordureEcranLeft);
-  ecranSpeechi.addChild(bordureEcranRight);
 
   return ecranSpeechi;
 }
@@ -113,5 +72,5 @@ PShape createSupportPiedEcran() {
 }
 
 void loadTexturesecranSpeechi() {
-  screenTexture = loadImage("asset/yellowstone-NationalGeographic_1743804.jpg");
+  speechiTexture = loadImage("asset/yellowstone-NationalGeographic_1743804.jpg");
 }

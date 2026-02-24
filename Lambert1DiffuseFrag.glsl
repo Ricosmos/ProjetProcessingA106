@@ -35,20 +35,17 @@ void main() {
   vec3  normal   = normalize(ecNormal);
   vec4  texColor = texture2D(texture, uv.st);
 
-  if(vertEmissive.x > 0 || vertEmissive.y > 0 || vertEmissive.z > 0) {
-    gl_FragColor = vertEmissive;
-  } else {
-    for(int i=0; i<lightCount; i++) {
-        vec3  lightDir  = normalize(lightPosition[i].xyz - ecPosition);
-        float intensity = lambertFactor(lightDir, normal);
-        float spec      = blinnPhongFactor(lightDir, ecPosition, normal, vertShininess);
-    
-//      dfColor += vertColor.rgb * lightDiffuse[i] * intensity;
-        dfColor += vertColor.rgb * texColor.rgb * lightDiffuse[i] * intensity;
-        spColor += lightSpecular[i] * spec;
-        amColor += lightAmbient[i];
-      }
+  for(int i=0; i<lightCount; i++) {
+      vec3  lightDir  = normalize(lightPosition[i].xyz - ecPosition);
+      float intensity = lambertFactor(lightDir, normal);
+      float spec      = blinnPhongFactor(lightDir, ecPosition, normal, vertShininess);
+  
+//    dfColor += vertColor.rgb * lightDiffuse[i] * intensity;
+      dfColor += vertColor.rgb * texColor.rgb * lightDiffuse[i] * intensity;
+      spColor += lightSpecular[i] * spec;
+      amColor += lightAmbient[i];
+    }
 
-    gl_FragColor = vec4(dfColor + amColor + spColor, vertColor.a * texColor.a);
-  }
+  vec3 emissive = vertEmissive.rgb * texColor.rgb;
+  gl_FragColor = vec4(dfColor + amColor + spColor + emissive, vertColor.a * texColor.a);
 }

@@ -151,11 +151,14 @@ PShape createSupportMoniteur() {
   PShape supportDessus = new CubeMagique(textures, defaultColors).build(PLANCHE_TROU_W, PLANCHE_TROU_H, PLANCHE_TROU_D);
   PShape supportPillier = new CubeMagique(missingTextures, supportColors).build(PILLIER_SUPPORT_W, PILLIER_SUPPORT_H, PILLIER_SUPPORT_D);
   PShape supportBase = new CubeMagique(missingTextures, supportColors).build(PLANCHE_TROU_W, PLANCHE_TROU_H, PLANCHE_TROU_D);
+  PShape moniteur = createMoniteur(MONITEUR_W, MONITEUR_H, MONITEUR_D, moniteurTexture, 150);
 
   supportDessus.translate(0, -PLANCHE_TROU_H, 0);
   supportPillier.translate(0, PILLIER_SUPPORT_H, 0);
   supportBase.translate(0, PILLIER_SUPPORT_H * 2, 0);
+  moniteur.translate(0, MONITEUR_H, PILLIER_SUPPORT_D * 2);
 
+  supportMoniteur.addChild(moniteur);
   supportMoniteur.addChild(supportDessus);
   supportMoniteur.addChild(supportPillier);
   supportMoniteur.addChild(supportBase);
