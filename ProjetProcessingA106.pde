@@ -64,6 +64,10 @@ void initShapes() {
 }
 
 void loadImages() {
+  noTexture = loadImage("asset/default.jpg");
+  metal = loadImage("asset/silver-metallic.jpg");
+  vide = loadImage("asset/vide.png");
+  
   loadSkyboxImages();
   loadTableImages();
   loadSalleImages();
@@ -72,9 +76,6 @@ void loadImages() {
   loadTableauImages();
   loadPorteTextures();
   loadImagesMoniteur();
-  noTexture = loadImage("asset/default.jpg");
-  metal = loadImage("asset/silver-metallic.jpg");
-  vide = loadImage("asset/vide.png");
 }
 
 void initTexturesArrays() {
