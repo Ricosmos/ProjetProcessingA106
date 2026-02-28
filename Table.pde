@@ -25,11 +25,11 @@ final int PILLIER_SUPPORT_D = 4 / 2;
 // PC
 
 final int COMPUTER_W = 10 / 2;
-final int COMPUTER_H = 25 / 2;
+final int COMPUTER_H = 28 / 2;
 final int COMPUTER_D = 25 / 2;
 
 final int COMPUTER_BOX_W = 12 / 2;
-final int COMPUTER_BOX_H = 27 / 2;
+final int COMPUTER_BOX_H = 30 / 2;
 final int COMPUTER_BOX_D = 27 / 2;
 final float COMPUTER_BOX_EPAISSEUR = 1 / 2;
 
@@ -243,7 +243,7 @@ void loadTableImages() {
   woodTopOpen = loadImage("asset/table/woodTableTop.png");
   woodTopOpenInvert = loadImage("asset/table/woodTableTopInvert.png");
   woodTopMoniteur = loadImage("asset/table/woodTableTopEcran.png");
-  caseFace = loadImage("asset/dell_front_case.png");
+  caseFace = loadImage("asset/table/dell_front_case.png");
 }
 
 void keyPressedTable() {

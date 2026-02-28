@@ -58,5 +58,5 @@ PShape createMoniteur(float w, float h, float d, PImage screenTexture, float lum
 }
 
 void loadImagesMoniteur() {
-  moniteurTexture = loadImage("asset/yellowstone-NationalGeographic_1743804.jpg");
+  moniteurTexture = loadImage("asset/table/ubuntu.png");
 }

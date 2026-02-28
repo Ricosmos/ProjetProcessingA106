@@ -47,6 +47,7 @@ void setup() {
   print("Deplacez la souris pour regarder autour.\n\n");
   print("Appuyez sur 't' pour inverser l'ouverture des bureaux\n");
   print("Appuyez sur 'i' pour afficher les informations de debogage.\n");
+  print("\nLes bureaux s'ouvrent et se ferment aleatoirement, la skybox tourne legerement pour donner un effet de rotation du ciel.\n");
 }
 
 void initShapes() {
@@ -92,7 +93,7 @@ void draw() {
 
   float fov = PI/3;
   float cameraZ = (height/2.0) / tan(fov/2.0);
-  perspective(fov, float(width)/float(height), cameraZ/20.0, cameraZ*10.0);
+  perspective(fov, float(width)/float(height), cameraZ/60.0, cameraZ*10.0);
 
 
   movePositionCamera();
