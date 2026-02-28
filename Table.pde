@@ -22,10 +22,39 @@ final int PILLIER_SUPPORT_W = 8 / 2;
 final int PILLIER_SUPPORT_H = SUPPORT_H;
 final int PILLIER_SUPPORT_D = 4 / 2;
 
+// PC
+
+final int COMPUTER_W = 10 / 2;
+final int COMPUTER_H = 25 / 2;
+final int COMPUTER_D = 25 / 2;
+
+final int COMPUTER_BOX_W = 12 / 2;
+final int COMPUTER_BOX_H = 27 / 2;
+final int COMPUTER_BOX_D = 27 / 2;
+final float COMPUTER_BOX_EPAISSEUR = 1 / 2;
+
 ArrayList<Table> tables = new ArrayList<Table>();
 
-PImage wood, woodTopClosed, woodTopOpen, woodTopOpenInvert, woodTopMoniteur, bureau, bureauSide;
+PImage wood, woodTopClosed, woodTopOpen, woodTopOpenInvert, woodTopMoniteur, bureau, bureauSide, caseFace;
 PShape tableOpen, tableClosed, supportMoniteurDynamique;
+
+PVector[] boxComputerColors = new PVector[] {
+  new PVector(10, 10, 10),
+  new PVector(10, 10, 10),
+  new PVector(10, 10, 10),
+  new PVector(10, 10, 10),
+  new PVector(10, 10, 10),
+  new PVector(10, 10, 10),
+};
+
+PVector[] computerColors = new PVector[] {
+  new PVector(255, 255, 255),
+  new PVector(40, 40, 40),
+  new PVector(40, 40, 40),
+  new PVector(40, 40, 40),
+  new PVector(40, 40, 40),
+  new PVector(40, 40, 40),
+};
 
 PShape createTable(boolean isOpen) {
   PShape table = createShape(GROUP);
@@ -35,6 +64,7 @@ PShape createTable(boolean isOpen) {
   PShape piedLeft = createPiedTable();
   PShape piedRight = createPiedTable();
   PShape supportMoniteur = createSupportMoniteur();
+  PShape computer = createComputer();
   supportMoniteur.setName("SupportMoniteur");
 
   planche.translate(0, -PLANCHE_H, 0);
@@ -43,15 +73,18 @@ PShape createTable(boolean isOpen) {
   piedRight.translate(SUPPORT_W - PIED_TABLE_W, SUPPORT_H * 2 + PIED_TABLE_H, 0);
 
   supportMoniteur.translate(0, 0, -PLANCHE_W + 22);
+  computer.translate(PLANCHE_W - COMPUTER_BOX_W - 10, COMPUTER_BOX_H, COMPUTER_BOX_D);
 
   if (isOpen) {
     table.addChild(supportMoniteur);
     supportMoniteurDynamique = table.getChild("SupportMoniteur");
   }
+
   table.addChild(support);
   table.addChild(piedLeft);
   table.addChild(piedRight);
   table.addChild(planche);
+  table.addChild(computer);
 
   // descend le centre de la table au niveau du sol
   table.translate(0, -(SUPPORT_H + PIED_TABLE_H) * 2, 0);
@@ -166,6 +199,42 @@ PShape createSupportMoniteur() {
   return supportMoniteur;
 }
 
+PShape createComputer() {
+  PImage[] computerTextures = new PImage[] {
+    caseFace,
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture
+  };
+
+  PShape computerBox = createShape(GROUP);
+
+  PShape boxLeft = new CubeMagique(missingTextures, boxComputerColors).build(COMPUTER_BOX_EPAISSEUR, COMPUTER_BOX_H, COMPUTER_BOX_D);
+  PShape boxRight = new CubeMagique(missingTextures, boxComputerColors).build(COMPUTER_BOX_EPAISSEUR, COMPUTER_BOX_H, COMPUTER_BOX_D);
+  PShape boxTop = new CubeMagique(missingTextures, boxComputerColors).build(COMPUTER_BOX_W, COMPUTER_BOX_EPAISSEUR, COMPUTER_BOX_D);
+  PShape boxBottom = new CubeMagique(missingTextures, boxComputerColors).build(COMPUTER_BOX_W, COMPUTER_BOX_EPAISSEUR, COMPUTER_BOX_D);
+  PShape boxBack = new CubeMagique(missingTextures, boxComputerColors).build(COMPUTER_BOX_W, COMPUTER_BOX_H, COMPUTER_BOX_EPAISSEUR);
+
+  PShape computer = new CubeMagique(computerTextures, computerColors).build(COMPUTER_W, COMPUTER_H, COMPUTER_D);
+
+  boxLeft.translate(-COMPUTER_BOX_W, 0, 0);
+  boxRight.translate(COMPUTER_BOX_W, 0, 0);
+  boxTop.translate(0, -COMPUTER_BOX_H, 0);
+  boxBottom.translate(0, COMPUTER_BOX_H, 0);
+  boxBack.translate(0, 0, -COMPUTER_BOX_D);
+
+  computerBox.addChild(boxLeft);
+  computerBox.addChild(boxRight);
+  computerBox.addChild(boxTop);
+  computerBox.addChild(boxBottom);
+  computerBox.addChild(boxBack);
+  computerBox.addChild(computer);
+
+  return computerBox;
+}
+
 void loadTableImages() {
   bureau = loadImage("asset/table/bureau.jpg");
   bureauSide = loadImage("asset/table/bureauSide.jpg");
@@ -174,8 +243,8 @@ void loadTableImages() {
   woodTopOpen = loadImage("asset/table/woodTableTop.png");
   woodTopOpenInvert = loadImage("asset/table/woodTableTopInvert.png");
   woodTopMoniteur = loadImage("asset/table/woodTableTopEcran.png");
+  caseFace = loadImage("asset/dell_front_case.png");
 }
-
 
 void keyPressedTable() {
   if (key == 't' || key == 'T') {
