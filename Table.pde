@@ -33,9 +33,19 @@ final int COMPUTER_BOX_H = 30 / 2;
 final int COMPUTER_BOX_D = 27 / 2;
 final float COMPUTER_BOX_EPAISSEUR = 1 / 2;
 
+// KEYBOARD AND MOUSE
+
+final int KEYBOARD_W = 45 / 2;
+final int KEYBOARD_H = 2 / 2;
+final int KEYBOARD_D = 20 / 2;
+
+final int MOUSE_W = 8 / 2;
+final int MOUSE_H = 2 / 2;
+final int MOUSE_D = 12 / 2;
+
 ArrayList<Table> tables = new ArrayList<Table>();
 
-PImage wood, woodTopClosed, woodTopOpen, woodTopOpenInvert, woodTopMoniteur, bureau, bureauSide, caseFace;
+PImage wood, woodTopClosed, woodTopOpen, woodTopOpenInvert, woodTopMoniteur, bureau, bureauSide, caseFace, keyboardTexture, mouseTexture;
 PShape tableOpen, tableClosed, supportMoniteurDynamique;
 
 PVector[] boxComputerColors = new PVector[] {
@@ -65,6 +75,8 @@ PShape createTable(boolean isOpen) {
   PShape piedRight = createPiedTable();
   PShape supportMoniteur = createSupportMoniteur();
   PShape computer = createComputer();
+  PShape keyboard = createKeyboard();
+  PShape mouse = createMouse();
   supportMoniteur.setName("SupportMoniteur");
 
   planche.translate(0, -PLANCHE_H, 0);
@@ -74,9 +86,13 @@ PShape createTable(boolean isOpen) {
 
   supportMoniteur.translate(0, 0, -PLANCHE_W + 22);
   computer.translate(PLANCHE_W - COMPUTER_BOX_W - 10, COMPUTER_BOX_H, COMPUTER_BOX_D);
+  keyboard.translate(-PLANCHE_W + KEYBOARD_W + 10, -PLANCHE_H * 2, PLANCHE_D - KEYBOARD_D - 20);
+  mouse.translate(PLANCHE_W - MOUSE_W - 10, -PLANCHE_H * 2, PLANCHE_D - MOUSE_D - KEYBOARD_D / 2 - 20);
 
   if (isOpen) {
     table.addChild(supportMoniteur);
+    table.addChild(keyboard);
+    table.addChild(mouse);
     supportMoniteurDynamique = table.getChild("SupportMoniteur");
   }
 
@@ -235,6 +251,56 @@ PShape createComputer() {
   return computerBox;
 }
 
+PShape createKeyboard() {
+  PImage[] textures = new PImage[] {
+    keyboardTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    keyboardTexture
+  };
+
+  PVector darkColor = new PVector(20, 20, 20);
+  PVector[] keyboardColors = new PVector[] {
+    darkColor,
+    darkColor,
+    darkColor,
+    darkColor,
+    darkColor,
+    new PVector(255, 255, 255)
+  };
+
+  PShape keyboard = new CubeMagique(textures, keyboardColors).build(KEYBOARD_W, KEYBOARD_H, KEYBOARD_D);
+
+  return keyboard;
+}
+
+PShape createMouse() {
+  PImage[] textures = new PImage[] {
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    noTexture,
+    mouseTexture
+  };
+
+  PVector darkColor = new PVector(40, 40, 40);
+  PVector[] mouseColors = new PVector[] {
+    darkColor,
+    darkColor,
+    darkColor,
+    darkColor,
+    darkColor,
+    new PVector(255, 255, 255)
+  };
+
+  PShape mouse = new CubeMagique(textures, mouseColors).build(MOUSE_W, MOUSE_H, MOUSE_D);
+
+  return mouse;
+}
+
 void loadTableImages() {
   bureau = loadImage("asset/table/bureau.jpg");
   bureauSide = loadImage("asset/table/bureauSide.jpg");
@@ -244,6 +310,8 @@ void loadTableImages() {
   woodTopOpenInvert = loadImage("asset/table/woodTableTopInvert.png");
   woodTopMoniteur = loadImage("asset/table/woodTableTopEcran.png");
   caseFace = loadImage("asset/table/dell_front_case.png");
+  keyboardTexture = loadImage("asset/table/keyboard.jpg");
+  mouseTexture = loadImage("asset/table/mouse.png");
 }
 
 void keyPressedTable() {

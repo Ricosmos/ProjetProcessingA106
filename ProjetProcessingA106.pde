@@ -67,7 +67,7 @@ void loadImages() {
   noTexture = loadImage("asset/default.jpg");
   metal = loadImage("asset/silver-metallic.jpg");
   vide = loadImage("asset/vide.png");
-  
+
   loadSkyboxImages();
   loadTableImages();
   loadSalleImages();
